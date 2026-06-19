@@ -43,6 +43,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.drgabo.galaandroid.ui.theme.AcentoPrincipal
 import com.drgabo.galaandroid.ui.theme.AcentoSuave
+import com.drgabo.galaandroid.ui.theme.GalaAndroidTheme
 import com.drgabo.galaandroid.ui.theme.TextoSecundario
 
 @Composable
@@ -203,6 +204,14 @@ fun NavBar(modifier: Modifier = Modifier) {
             color = Color.Gray,
             modifier = Modifier.align(Alignment.TopCenter)
         )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun NavBarThemePreview(){
+    GalaAndroidTheme {
+        NavBar()
     }
 }
 
