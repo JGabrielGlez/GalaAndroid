@@ -20,31 +20,39 @@ import com.drgabo.galaandroid.ui.theme.GalaAndroidTheme
 
 @Composable
 fun BadgeEstado(
-    modifier: Modifier = Modifier,
+    surfaceModifier: Modifier = Modifier,
+    textModifier: Modifier = Modifier,
+
     mensaje: String,
     colorFondo: Color = Color.Green.copy(alpha = .5f),
-    colorTexto:Color=Color.Green,
+    colorTexto: Color = Color.Green,
 
-) {
+    ) {
     Surface(
-        color=colorFondo,
+        modifier = surfaceModifier,
+        color = colorFondo,
         contentColor = colorTexto,
         shape = RoundedCornerShape(50)
     ) {
-        Text(text = mensaje,
+        Text(
+            text = mensaje,
+            modifier = textModifier
+                .padding(horizontal = 8.dp, vertical = 2.dp),
             textAlign = TextAlign.Center,
-            color=colorTexto,
-            modifier= Modifier.padding(horizontal = 8.dp, vertical = 2.dp))
+            color = colorTexto,
+        )
     }
 }
 
 @Preview(showBackground = true, widthDp = 100)
 @Composable
-fun ShowBadgeEstado(){
+fun ShowBadgeEstado() {
     GalaAndroidTheme {
-        BadgeEstado(mensaje = "Confirmada",
+        BadgeEstado(
+            mensaje = "Confirmada",
             colorFondo = EstadoConfirmadaFondo,
-            colorTexto = EstadoConfirmada)
+            colorTexto = EstadoConfirmada
+        )
 
     }
 }
