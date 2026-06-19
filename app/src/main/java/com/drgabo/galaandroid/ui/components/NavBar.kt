@@ -1,5 +1,6 @@
 package com.drgabo.galaandroid.ui.components
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import  com.drgabo.galaandroid.ui.icons.home
 import  com.drgabo.galaandroid.ui.icons.menu
@@ -8,8 +9,13 @@ import  com.drgabo.galaandroid.ui.icons.content_cut
 import  com.drgabo.galaandroid.ui.icons.view_agenda
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarDefaults
@@ -65,8 +71,7 @@ fun AgendaScreen(modifier: Modifier = Modifier) {
 fun ServiceScreen(modifier: Modifier = Modifier) {
     Box(
         modifier = Modifier
-            .fillMaxSize()
-           ,
+            .fillMaxSize(),
         contentAlignment = Alignment.Center
     ) {
         Text("Service Screen")
@@ -124,15 +129,15 @@ fun AppNavHost(
         navController,
         startDestination = startDestination.route,
 
-    ) {
+        ) {
         Destination.entries.forEach { destination ->
             composable(destination.route) {
                 when (destination) {
                     Destination.SERVICES -> ServiceScreen()
-                    Destination.AGENDA->AgendaScreen()
-                    Destination.HOME->HomeScreen()
+                    Destination.AGENDA -> AgendaScreen()
+                    Destination.HOME -> HomeScreen()
                     Destination.CLIENTS -> ClientScreen()
-                    Destination.MORE->MoreScreen()
+                    Destination.MORE -> MoreScreen()
                 }
             }
         }
@@ -146,39 +151,58 @@ fun NavBar(modifier: Modifier = Modifier) {
     val startDestination = Destination.HOME
     var selectedDestination by rememberSaveable { mutableIntStateOf(startDestination.ordinal) }
 
-    Scaffold(
-        modifier = modifier,
-        bottomBar = {
-            NavigationBar(windowInsets = NavigationBarDefaults.windowInsets) {
-                Destination.entries.forEachIndexed { index, destination ->
-                    NavigationBarItem(
-                        selected = selectedDestination == index,
-                        onClick = {
-                            navController.navigate(route = destination.route)
-                            selectedDestination = index
-                        },
-                        icon = {
-                            Icon(
+    Box(modifier = Modifier){
 
-                                destination.icon,
-                                contentDescription = destination.contentDescription
-                            )
-                        },
-                        label = { Text(destination.label) },
-                        colors =
-                            NavigationBarItemDefaults.colors(
-                               selectedIconColor = AcentoPrincipal,
-                                unselectedIconColor = Color.Gray,
-                                selectedTextColor = AcentoPrincipal,
-                                unselectedTextColor = Color.Gray,
-                                indicatorColor = AcentoSuave.copy(alpha = .45f)
-                            )
+        NavigationBar(windowInsets = NavigationBarDefaults.windowInsets
+        ) {
+            Destination.entries.forEachIndexed { index, destination ->
+                NavigationBarItem(
+                    selected = selectedDestination == index,
+                    onClick = {
+                        navController.navigate(route = destination.route)
+                        selectedDestination = index
+                    },
+                    icon = {
+                        Icon(
 
-                    )
-                }
+                            destination.icon,
+                            contentDescription = destination.contentDescription
+                        )
+                    },
+                    label = { Text(destination.label) },
+                    colors =
+                        NavigationBarItemDefaults.colors(
+                            selectedIconColor = AcentoPrincipal,
+                            unselectedIconColor = Color.Gray,
+                            selectedTextColor = AcentoPrincipal,
+                            unselectedTextColor = Color.Gray,
+                            indicatorColor = Color.Transparent
+                        ),
+                    modifier = Modifier
+
+                        .then(
+                            if (selectedDestination == index) {
+                                Modifier
+                                    .size(64.dp)
+                                    .padding(4.dp)
+                                    .background(
+                                        color = AcentoSuave.copy(alpha = .45f),
+                                        shape = CircleShape,
+                                    )
+                            } else {
+                                Modifier
+                            }
+                        )
+
+
+                )
             }
         }
-    ) { contentPadding ->
-        AppNavHost(navController, startDestination, modifier = Modifier.padding(contentPadding))
+        HorizontalDivider(
+            thickness = 2.dp,
+            color = Color.Gray,
+            modifier = Modifier.align(Alignment.TopCenter)
+        )
     }
 }
+
