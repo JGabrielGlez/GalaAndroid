@@ -54,7 +54,6 @@ fun SummaryCard(
                 text = numero, color = colorNumero,
                 fontFamily = MonstserratFamily,
                 style = MaterialTheme.typography.titleLarge,
-                fontSize = 22.sp,
                 fontWeight = FontWeight.SemiBold
 
             )
@@ -62,7 +61,7 @@ fun SummaryCard(
                 text = mensaje,
                 color = colorMensaje,
                 fontFamily = MonstserratFamily,
-                fontSize = 11.sp,
+                style = MaterialTheme.typography.labelSmall,
                 maxLines = 1
 
             )

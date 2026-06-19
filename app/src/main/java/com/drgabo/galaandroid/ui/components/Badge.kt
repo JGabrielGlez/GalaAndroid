@@ -36,6 +36,7 @@ fun BadgeEstado(
     ) {
         Text(
             text = mensaje,
+            fontFamily = MonstserratFamily,
             modifier = textModifier
                 .padding(horizontal = 8.dp, vertical = 2.dp),
             textAlign = TextAlign.Center,
