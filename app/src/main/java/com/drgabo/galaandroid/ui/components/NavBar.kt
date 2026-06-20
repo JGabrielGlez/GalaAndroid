@@ -154,7 +154,8 @@ fun NavBar(modifier: Modifier = Modifier) {
 
     Box(modifier = Modifier){
 
-        NavigationBar(windowInsets = NavigationBarDefaults.windowInsets
+        NavigationBar(windowInsets = NavigationBarDefaults.windowInsets,
+            containerColor = Color.White
         ) {
             Destination.entries.forEachIndexed { index, destination ->
                 NavigationBarItem(
