@@ -3,6 +3,7 @@ package com.drgabo.galaandroid.ui.components
 
 import com.drgabo.galaandroid.ui.icons.notifications
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -19,6 +20,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -34,8 +36,8 @@ fun DashboardHeader(
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .height(100.dp)
-            .padding(all = 12.dp),
+            .height(60.dp)
+            ,
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -49,10 +51,7 @@ fun DashboardHeader(
 
         OutlinedCard(
             shape = CircleShape,
-            border = BorderStroke(
-                width = 1.dp,
-                color = NeutroBorde
-            ),
+
             colors = CardDefaults.outlinedCardColors(
                 containerColor = MaterialTheme.colorScheme.surface
             )
@@ -64,6 +63,8 @@ fun DashboardHeader(
                         imgVector = notifications,
                         contentDes = "Notificaciones"
                     )
+                ,modifier.size(36.dp)
+                
             )
         }
     }

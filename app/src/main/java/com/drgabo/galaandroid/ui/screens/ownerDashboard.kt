@@ -2,8 +2,11 @@ package com.drgabo.galaandroid.ui.screens
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -18,6 +21,7 @@ import com.drgabo.galaandroid.ui.components.*
 import com.drgabo.galaandroid.ui.theme.EstadoConfirmada
 import com.drgabo.galaandroid.ui.theme.EstadoConfirmadaFondo
 import com.drgabo.galaandroid.ui.theme.GalaAndroidTheme
+import com.drgabo.galaandroid.ui.theme.NeutroBorde
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -25,9 +29,22 @@ fun OwnerDashboard(nombrePantalla: String = "Hola, María") {
     //var presses by remember { mutableIntStateOf(0) }
 
     Scaffold(
+        modifier = Modifier.fillMaxSize(),
         containerColor = Color.White,
         topBar = {
-            DashboardHeader(userName = "María")
+            Column(
+                modifier = Modifier.padding(horizontal = 12.dp)
+            ) {
+
+                DashboardHeader(userName = "María")
+                HorizontalDivider(
+                    thickness = 1.dp, color = NeutroBorde
+                )
+                HorizontalDivider(
+                    color = Color.Transparent,
+                    thickness = 12.dp
+                )
+            }
         },
         bottomBar = {
             NavBar()
@@ -38,9 +55,12 @@ fun OwnerDashboard(nombrePantalla: String = "Hola, María") {
     ) { innerPadding ->
         Column(
             modifier = Modifier
-                .padding(innerPadding),
+                .padding(innerPadding)
+                .padding(horizontal = 12.dp),
+
             verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
+
             AppoinmentDetailCard(
                 nombreCliente = "Mariana Salazar",
                 servicio = "Corte de cabello",
