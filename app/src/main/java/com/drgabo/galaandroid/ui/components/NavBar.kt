@@ -44,6 +44,7 @@ import androidx.navigation.compose.rememberNavController
 import com.drgabo.galaandroid.ui.theme.AcentoPrincipal
 import com.drgabo.galaandroid.ui.theme.AcentoSuave
 import com.drgabo.galaandroid.ui.theme.GalaAndroidTheme
+import com.drgabo.galaandroid.ui.theme.NeutroBorde
 import com.drgabo.galaandroid.ui.theme.TextoSecundario
 
 @Composable
@@ -201,8 +202,8 @@ fun NavBar(modifier: Modifier = Modifier) {
             }
         }
         HorizontalDivider(
-            thickness = 2.dp,
-            color = Color.Gray,
+            thickness = 1.dp,
+            color = NeutroBorde,
             modifier = Modifier.align(Alignment.TopCenter)
         )
     }
