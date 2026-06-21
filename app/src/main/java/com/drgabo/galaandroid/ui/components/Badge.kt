@@ -45,7 +45,7 @@ fun BadgeEstado(
     }
 }
 
-@Preview(showBackground = true, widthDp = 100)
+@Preview(showBackground = true, widthDp = 390)
 @Composable
 fun ShowBadgeEstado() {
     GalaAndroidTheme {

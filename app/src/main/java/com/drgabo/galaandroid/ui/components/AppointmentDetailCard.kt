@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -33,30 +34,47 @@ fun AppoinmentDetailCard(
     nombreCliente: String,
     servicio: String,
     duracion: String,
+    horaInicio:String,
+
+    mensajeBagde: String,
+    colorBagde:Color,
+    colorTextoBagde:Color,
+
     modifier: Modifier = Modifier
 ) {
-    Card(
-        shape = RoundedCornerShape(12.dp),
-        elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
-        modifier = modifier.border(
-            width = 1.dp,
-            shape = RoundedCornerShape(12.dp),
-            color = NeutroBorde
-        ),
-        colors = CardDefaults.cardColors(
-            containerColor = NeutroBlanco
+    Row(
+        modifier=Modifier.fillMaxWidth().padding(12.dp),
+        horizontalArrangement = Arrangement.spacedBy(12.dp),
+        verticalAlignment = Alignment.Top
+    ){
+        //aquí irá lo que es la hora actual, que siempre debe tener un
+        //tamaño fijo, para no romper el layout
+        Text(text = horaInicio,
+            fontFamily = MonstserratFamily,
+            style=Typography.bodyMedium,
+            color=TextoSecundario
         )
-    ) {
-        Box(
-            modifier=Modifier
-                .fillMaxWidth()
-                .padding(12.dp)
-        ){
-            //Irán los tres textos apilados uno encima de otro, aunque serám
-            //parte de un layout de 2 columnas, el badge será de 1/3
+        Card(
+            shape = RoundedCornerShape(12.dp),
+            elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
+            modifier = modifier.border(
+                width = 1.dp,
+                shape = RoundedCornerShape(12.dp),
+                color = NeutroBorde
+            )
+                ,
+            colors = CardDefaults.cardColors(
+                containerColor = NeutroBlanco
+            )
+        ) {
+
+                //Irán los tres textos apilados uno encima de otro, aunque serám
+                //parte de un layout de 2 columnas, el badge será de 1/3
                 Column(
-                    modifier = Modifier.align(Alignment.TopStart),
-                    verticalArrangement = Arrangement.spacedBy(2.dp)
+                    modifier=Modifier.padding(12.dp).fillMaxWidth(),
+                    verticalArrangement = Arrangement.spacedBy(2.dp),
+                    horizontalAlignment =
+                        Alignment.CenterHorizontally
                 ) {
                     //Texto principal
                     Text(
@@ -83,22 +101,36 @@ fun AppoinmentDetailCard(
                         style = MaterialTheme.typography.bodyMedium,
                         maxLines = 1
                     )
-            }
-            BadgeEstado(
-                surfaceModifier= Modifier.align(Alignment.BottomEnd),
-                mensaje = "Confirmada",
-                colorFondo =EstadoConfirmadaFondo,
-                colorTexto = EstadoConfirmada)
+
+                    Row() {
+                        Spacer(Modifier.weight(1f))
+                        Row() {
+                            //aquí irá el posible botón de WA
+                            BadgeEstado(
+
+                                mensaje = mensajeBagde,
+                                colorFondo =colorBagde,
+                                colorTexto = colorTextoBagde)
+                        }
+                    }
+                }
+
+
         }
     }
 }
 
 @Preview
 @Composable
-fun preview() {
+fun Preview() {
     AppoinmentDetailCard(
         nombreCliente = "Jesús Gabriel",
         servicio = "Corte de cabello",
-        duracion = "60 minutos"
+        duracion = "60 minutos",
+        horaInicio = "12:00 AM",
+        mensajeBagde = "Confirmada",
+        colorBagde = EstadoConfirmadaFondo,
+        colorTextoBagde = EstadoConfirmada,
+
     )
 }
