@@ -1,5 +1,7 @@
 package com.drgabo.galaandroid.ui.components
 
+import com.drgabo.galaandroid.R
+import com.drgabo.galaandroid.ui.components.GalaIcon
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -10,6 +12,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import com.drgabo.galaandroid.ui.theme.*
@@ -27,32 +30,37 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.drgabo.galaandroid.ui.theme.MonstserratFamily
-
+import com.drgabo.galaandroid.ui.components.GalaIconButton
 
 @Composable
 fun AppoinmentDetailCard(
     nombreCliente: String,
     servicio: String,
     duracion: String,
-    horaInicio:String,
+    horaInicio: String,
 
     mensajeBagde: String,
-    colorBagde:Color,
-    colorTextoBagde:Color,
+    colorBagde: Color,
+    colorTextoBagde: Color,
 
+    iconButtonIcon: GalaIcon? = null,
+    iconOnClick: () -> Unit = {},
     modifier: Modifier = Modifier
 ) {
     Row(
-        modifier=Modifier.fillMaxWidth().padding(12.dp),
+        modifier = Modifier
+            .fillMaxWidth(),
+
         horizontalArrangement = Arrangement.spacedBy(12.dp),
         verticalAlignment = Alignment.Top
-    ){
+    ) {
         //aquí irá lo que es la hora actual, que siempre debe tener un
         //tamaño fijo, para no romper el layout
-        Text(text = horaInicio,
+        Text(
+            text = horaInicio,
             fontFamily = MonstserratFamily,
-            style=Typography.bodyMedium,
-            color=TextoSecundario
+            style = Typography.bodyMedium,
+            color = TextoSecundario
         )
         Card(
             shape = RoundedCornerShape(12.dp),
@@ -61,59 +69,73 @@ fun AppoinmentDetailCard(
                 width = 1.dp,
                 shape = RoundedCornerShape(12.dp),
                 color = NeutroBorde
-            )
-                ,
+            ),
             colors = CardDefaults.cardColors(
                 containerColor = NeutroBlanco
             )
         ) {
 
-                //Irán los tres textos apilados uno encima de otro, aunque serám
-                //parte de un layout de 2 columnas, el badge será de 1/3
-                Column(
-                    modifier=Modifier.padding(12.dp).fillMaxWidth(),
-                    verticalArrangement = Arrangement.spacedBy(2.dp),
-                    horizontalAlignment =
-                        Alignment.CenterHorizontally
+            //Irán los tres textos apilados uno encima de otro, aunque serám
+            //parte de un layout de 2 columnas, el badge será de 1/3
+            Column(
+                modifier = Modifier
+                    .padding(12.dp)
+                    .fillMaxWidth(),
+                verticalArrangement = Arrangement.spacedBy(2.dp),
+                horizontalAlignment =
+                    Alignment.Start
+            ) {
+                //Texto principal
+                Text(
+                    text = nombreCliente,
+                    fontFamily = MonstserratFamily,
+                    color = TextoPrimario,
+                    style = MaterialTheme.typography.titleMedium,
+                    maxLines = 1
+                )
+                //Texto Secundario
+                Text(
+                    text = servicio,
+                    fontFamily = MonstserratFamily,
+                    color = TextoSecundario,
+                    style = MaterialTheme.typography.titleSmall,
+                    maxLines = 1
+                )
+
+                //Texto Terciario
+                Text(
+                    text = duracion,
+                    fontFamily = MonstserratFamily,
+                    color = TextoSecundario.copy(alpha = .7f),
+                    style = MaterialTheme.typography.bodyMedium,
+                    maxLines = 1
+                )
+
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
-                    //Texto principal
-                    Text(
-                        text = nombreCliente,
-                        fontFamily = MonstserratFamily,
-                        color = TextoPrimario,
-                        style = MaterialTheme.typography.titleMedium,
-                        maxLines = 1
-                    )
-                    //Texto Secundario
-                    Text(
-                        text = servicio,
-                        fontFamily = MonstserratFamily,
-                        color = TextoSecundario,
-                        style = MaterialTheme.typography.titleSmall,
-                        maxLines = 1
-                    )
+                    Spacer(modifier = Modifier.weight(1f))
 
-                    //Texto Terciario
-                    Text(
-                        text = duracion,
-                        fontFamily = MonstserratFamily,
-                        color = TextoSecundario.copy(alpha = .7f),
-                        style = MaterialTheme.typography.bodyMedium,
-                        maxLines = 1
-                    )
-
-                    Row() {
-                        Spacer(Modifier.weight(1f))
-                        Row() {
-                            //aquí irá el posible botón de WA
-                            BadgeEstado(
-
-                                mensaje = mensajeBagde,
-                                colorFondo =colorBagde,
-                                colorTexto = colorTextoBagde)
+                    Row(
+                        horizontalArrangement = Arrangement.spacedBy(6.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        if (iconButtonIcon != null) {
+                            GalaIconButton(
+                                onClick = iconOnClick,
+                                icon = iconButtonIcon
+                            )
                         }
+
+                        BadgeEstado(
+                            mensaje = mensajeBagde,
+                            colorFondo = colorBagde,
+                            colorTexto = colorTextoBagde
+                        )
                     }
                 }
+            }
 
 
         }
@@ -131,6 +153,11 @@ fun Preview() {
         mensajeBagde = "Confirmada",
         colorBagde = EstadoConfirmadaFondo,
         colorTextoBagde = EstadoConfirmada,
+        iconButtonIcon = GalaIcon.DrawableIcon(
+            resId = R.drawable.whatsapp_icon,
+            contentDes = "WhatsApp"
+        )
+
 
     )
 }

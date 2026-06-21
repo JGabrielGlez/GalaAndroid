@@ -19,6 +19,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.drgabo.galaandroid.ui.theme.GalaAndroidTheme
@@ -39,9 +40,11 @@ fun DashboardHeader(
         verticalAlignment = Alignment.CenterVertically
     ) {
         Text(
+            modifier = Modifier.weight(1f),
             text = "Hola, $userName",
             style = MaterialTheme.typography.titleMedium,
-            color = MaterialTheme.colorScheme.onBackground
+            color = MaterialTheme.colorScheme.onBackground,
+            textAlign = TextAlign.Center
         )
 
         OutlinedCard(
@@ -54,23 +57,21 @@ fun DashboardHeader(
                 containerColor = MaterialTheme.colorScheme.surface
             )
         ) {
-            IconButton(
+            GalaIconButton(
                 onClick = onNotificationClick,
-                modifier = Modifier.size(44.dp)
-            ) {
-                Icon(
-                    imageVector = notifications, // aquí usarías tu ícono descargado
-                    contentDescription = "Notificaciones",
-                    tint = MaterialTheme.colorScheme.onSurface
-                )
-            }
+                icon =
+                    GalaIcon.VectorIcon(
+                        imgVector = notifications,
+                        contentDes = "Notificaciones"
+                    )
+            )
         }
     }
 }
 
 @Preview(showBackground = true)
 @Composable
-fun MostrarHeader(){
+fun MostrarHeader() {
     GalaAndroidTheme {
         DashboardHeader(userName = "María")
     }
