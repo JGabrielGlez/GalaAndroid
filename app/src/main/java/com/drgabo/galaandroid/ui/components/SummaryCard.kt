@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -23,6 +24,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.drgabo.galaandroid.ui.theme.GalaAndroidTheme
 import com.drgabo.galaandroid.ui.theme.MonstserratFamily
+import com.drgabo.galaandroid.ui.theme.NeutroBorde
 
 @Composable
 fun SummaryCard(
@@ -35,7 +37,7 @@ fun SummaryCard(
     Card(
         colors = CardDefaults
             .cardColors(
-                containerColor = MaterialTheme.colorScheme.secondary,
+                containerColor = NeutroBorde,
             ),
         modifier = modifier,
         shape = RoundedCornerShape(12.dp),
@@ -117,11 +119,12 @@ fun ShowCards() {
 }
 
 
-@Preview(showBackground = true, widthDp = 360)
+@Preview(showBackground = true)
 @Composable
 fun ShowGalaCard() {
     GalaAndroidTheme {
-        SummaryCard(numero = "12", mensaje = "Citas")
+
+        SummaryCard(modifier = Modifier.safeDrawingPadding(),numero = "12", mensaje = "Citas")
     }
 
 }

@@ -1,5 +1,6 @@
 package com.drgabo.galaandroid.ui.screens
 
+import android.R
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -15,101 +16,113 @@ import androidx.compose.material3.TopAppBarDefaults.topAppBarColors
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.drgabo.galaandroid.ui.components.*
 import com.drgabo.galaandroid.ui.theme.EstadoConfirmada
 import com.drgabo.galaandroid.ui.theme.EstadoConfirmadaFondo
 import com.drgabo.galaandroid.ui.theme.GalaAndroidTheme
+import com.drgabo.galaandroid.ui.theme.MonstserratFamily
 import com.drgabo.galaandroid.ui.theme.NeutroBorde
+import com.drgabo.galaandroid.ui.theme.Typography
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun OwnerDashboard(nombrePantalla: String = "Hola, María") {
-    //var presses by remember { mutableIntStateOf(0) }
+  //var presses by remember { mutableIntStateOf(0) }
 
-    Scaffold(
-        modifier = Modifier.fillMaxSize(),
-        containerColor = Color.White,
-        topBar = {
-            Column(
-                modifier = Modifier.padding(horizontal = 12.dp)
-            ) {
+  Scaffold(
+    modifier = Modifier.fillMaxSize(),
+    containerColor = Color.White,
+    topBar = {
+      Column(
+        modifier = Modifier.padding(horizontal = 12.dp)
+      ) {
 
-                DashboardHeader(userName = "María")
-                HorizontalDivider(
-                    thickness = 1.dp, color = NeutroBorde
-                )
-                HorizontalDivider(
-                    color = Color.Transparent,
-                    thickness = 12.dp
-                )
-            }
-        },
-        bottomBar = {
-            NavBar()
-        },
-        floatingActionButton = {
-            FAB(onClick = {})
-        }
-    ) { innerPadding ->
-        Column(
-            modifier = Modifier
-                .padding(innerPadding)
-                .padding(horizontal = 12.dp),
-
-            verticalArrangement = Arrangement.spacedBy(16.dp),
-        ) {
-
-            AppoinmentDetailCard(
-                nombreCliente = "Mariana Salazar",
-                servicio = "Corte de cabello",
-                duracion = "120 minutos",
-                horaInicio = "12:00 AM",
-                mensajeBagde = "Confirmada",
-                colorBagde = EstadoConfirmadaFondo,
-                colorTextoBagde = EstadoConfirmada,
-
-                )
-            AppoinmentDetailCard(
-                nombreCliente = "Mariana Salazar",
-                servicio = "Corte de cabello",
-                duracion = "120 minutos",
-                horaInicio = "12:00 AM", mensajeBagde = "Confirmada",
-                colorBagde = EstadoConfirmadaFondo,
-                colorTextoBagde = EstadoConfirmada,
-
-
-                )
-            AppoinmentDetailCard(
-                nombreCliente = "Mariana Salazar",
-                servicio = "Corte de cabello",
-                duracion = "120 minutos",
-                horaInicio = "12:00 AM", mensajeBagde = "Confirmada",
-                colorBagde = EstadoConfirmadaFondo,
-                colorTextoBagde = EstadoConfirmada,
-
-
-                )
-            AppoinmentDetailCard(
-                nombreCliente = "Mariana Salazar",
-                servicio = "Corte de cabello",
-                duracion = "120 minutos",
-                horaInicio = "12:00 AM", mensajeBagde = "Confirmada",
-                colorBagde = EstadoConfirmadaFondo,
-                colorTextoBagde = EstadoConfirmada,
-
-
-                )
-        }
+        DashboardHeader(userName = "María")
+        HorizontalDivider(
+          thickness = 1.dp, color = NeutroBorde
+        )
+        HorizontalDivider(
+          color = Color.Transparent,
+          thickness = 12.dp
+        )
+      }
+    },
+    bottomBar = {
+      NavBar()
+    },
+    floatingActionButton = {
+      FAB(onClick = {})
     }
+  ) { innerPadding ->
+    Column(
+      modifier = Modifier
+          .padding(innerPadding)
+          .padding(horizontal = 12.dp),
+
+      verticalArrangement = Arrangement.spacedBy(16.dp),
+    ) {
+
+      SummaryCardsRow()
+      Text(
+        text = "Miércoles 7 de abril",
+        style = Typography.bodyLarge,
+        fontWeight = FontWeight.Bold,
+        fontFamily = MonstserratFamily,
+        modifier = Modifier.padding(vertical = 12.dp)
+
+      )
+      AppoinmentDetailCard(
+        nombreCliente = "Mariana Salazar",
+        servicio = "Corte de cabello",
+        duracion = "120 minutos",
+        horaInicio = "12:00 AM",
+        mensajeBagde = "Confirmada",
+        colorBagde = EstadoConfirmadaFondo,
+        colorTextoBagde = EstadoConfirmada,
+
+        )
+      AppoinmentDetailCard(
+        nombreCliente = "Mariana Salazar",
+        servicio = "Corte de cabello",
+        duracion = "120 minutos",
+        horaInicio = "12:00 AM", mensajeBagde = "Confirmada",
+        colorBagde = EstadoConfirmadaFondo,
+        colorTextoBagde = EstadoConfirmada,
+
+
+        )
+      AppoinmentDetailCard(
+        nombreCliente = "Mariana Salazar",
+        servicio = "Corte de cabello",
+        duracion = "120 minutos",
+        horaInicio = "12:00 AM", mensajeBagde = "Confirmada",
+        colorBagde = EstadoConfirmadaFondo,
+        colorTextoBagde = EstadoConfirmada,
+
+
+        )
+      AppoinmentDetailCard(
+        nombreCliente = "Mariana Salazar",
+        servicio = "Corte de cabello",
+        duracion = "120 minutos",
+        horaInicio = "12:00 AM", mensajeBagde = "Confirmada",
+        colorBagde = EstadoConfirmadaFondo,
+        colorTextoBagde = EstadoConfirmada,
+
+
+        )
+    }
+  }
 }
 
 @Preview
 @Composable
 fun MostrarAgenda() {
-    GalaAndroidTheme {
+  GalaAndroidTheme {
 
-        OwnerDashboard()
-    }
+    OwnerDashboard()
+  }
 }
