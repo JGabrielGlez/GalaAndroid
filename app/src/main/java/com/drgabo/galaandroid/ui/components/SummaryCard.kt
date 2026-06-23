@@ -23,8 +23,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.drgabo.galaandroid.ui.theme.GalaAndroidTheme
-import com.drgabo.galaandroid.ui.theme.MonstserratFamily
 import com.drgabo.galaandroid.ui.theme.NeutroBorde
+import com.drgabo.galaandroid.ui.theme.MonstserratFamily
 
 @Composable
 fun SummaryCard(
