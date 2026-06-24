@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
@@ -23,7 +24,7 @@ fun ScaffoldPrincipal(
                       nombrePantalla:String,
                       onFabClick:()->Unit={},
                       showFab:Boolean,
-                      content:@Composable ()->Unit)
+                      content: LazyListScope.()->Unit)
                        {
   //var presses by remember { mutableIntStateOf(0) }
 GalaAndroidTheme {
@@ -45,11 +46,10 @@ GalaAndroidTheme {
         FAB(onClick = onFabClick)
     }
   ) { innerPadding ->
-    Column(
+    LazyColumn(
       modifier = Modifier
         .padding(innerPadding)
         .padding(horizontal = 12.dp),
-
       verticalArrangement = Arrangement.spacedBy(16.dp),
     ) {
       content()

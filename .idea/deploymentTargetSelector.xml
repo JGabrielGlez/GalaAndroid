@@ -6,11 +6,11 @@
         <option name="selectionMode" value="DROPDOWN" />
         <DialogSelection />
       </SelectionState>
-      <SelectionState runConfigName="MostrarAgenda">
+      <SelectionState runConfigName="NavBarThemePreview">
         <option name="selectionMode" value="DROPDOWN" />
         <DialogSelection />
       </SelectionState>
-      <SelectionState runConfigName="ShowGalaCard">
+      <SelectionState runConfigName="MostrarAgenda2">
         <option name="selectionMode" value="DROPDOWN" />
         <DialogSelection />
       </SelectionState>

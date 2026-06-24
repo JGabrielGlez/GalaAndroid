@@ -1,75 +1,112 @@
 package com.drgabo.galaandroid.ui.screens
 
+import android.R
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.drgabo.galaandroid.ui.components.*
+import com.drgabo.galaandroid.ui.theme.AcentoFondo
+import com.drgabo.galaandroid.ui.theme.AcentoPrincipal
+import com.drgabo.galaandroid.ui.theme.AcentoSuave
 import com.drgabo.galaandroid.ui.theme.EstadoConfirmada
 import com.drgabo.galaandroid.ui.theme.EstadoConfirmadaFondo
 import com.drgabo.galaandroid.ui.theme.MonstserratFamily
+import com.drgabo.galaandroid.ui.theme.NeutroBorde
+import com.drgabo.galaandroid.ui.theme.TextoHint
 import com.drgabo.galaandroid.ui.theme.Typography
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun OwnerDashboard(nombrePantalla: String = "Hola, María") {
-  //var presses by remember { mutableIntStateOf(0) }
-ScaffoldPrincipal(showFab = true, nombrePantalla = nombrePantalla) {
+    //var presses by remember { mutableIntStateOf(0) }
+    ScaffoldPrincipal(showFab = true, nombrePantalla = nombrePantalla) {
 
-  SummaryCardsRow()
-  Text(
-    text = "Miércoles 7 de abril",
-    style = Typography.bodyLarge,
-    fontWeight = FontWeight.Bold,
-    fontFamily = MonstserratFamily,
-    modifier = Modifier.padding(vertical = 12.dp)
+        item { SummaryCardsRow() }
+        item {
+            Text(
+                text = "Miércoles 7 de abril",
+                style = Typography.bodyLarge,
+                fontWeight = FontWeight.Bold,
+                fontFamily = MonstserratFamily,
+                modifier = Modifier.padding(vertical = 12.dp)
+            )
+        }
+        item {
+            Column (
+                modifier = Modifier
+                    .padding(horizontal = 12.dp),
+             verticalArrangement = Arrangement.Center,
+              horizontalAlignment = Alignment.Start,
 
-  )
-  AppoinmentDetailCard(
-    nombreCliente = "Mariana Salazar",
-    servicio = "Corte de cabello",
-    duracion = "120 minutos",
-    horaInicio = "12:00 AM",
-    mensajeBagde = "Confirmada",
-    colorBagde = EstadoConfirmadaFondo,
-    colorTextoBagde = EstadoConfirmada,
+            ) {
+                Button(
+                    onClick = {},
+                    modifier = Modifier
+                      .padding(horizontal = 8.dp, vertical = 4.dp)
+                      .width(120.dp),
+                  colors = ButtonDefaults.buttonColors(containerColor =
+                  AcentoSuave)
 
-    )
-  AppoinmentDetailCard(
-    nombreCliente = "Mariana Salazar",
-    servicio = "Corte de cabello",
-    duracion = "120 minutos",
-    horaInicio = "12:00 AM", mensajeBagde = "Confirmada",
-    colorBagde = EstadoConfirmadaFondo,
-    colorTextoBagde = EstadoConfirmada,
+                    ) {
+                    GalaText(
+                        "Activas",
+                        colorTexto = Color.Black,
+                        peso = FontWeight.SemiBold,
+                        estilo = Typography.bodySmall, modifier = Modifier
+                    )
+                                    }
+            }
+          Button(  onClick = {},
+            modifier = Modifier
 
+              .padding(horizontal = 8.dp, vertical = 4.dp)
+              .width(120.dp),
+            colors = ButtonDefaults.buttonColors(
+              contentColor = NeutroBorde,
 
-    )
-  AppoinmentDetailCard(
-    nombreCliente = "Mariana Salazar",
-    servicio = "Corte de cabello",
-    duracion = "120 minutos",
-    horaInicio = "12:00 AM", mensajeBagde = "Confirmada",
-    colorBagde = EstadoConfirmadaFondo,
-    colorTextoBagde = EstadoConfirmada,
+            )
 
+          ) {
 
-    )
-  AppoinmentDetailCard(
-    nombreCliente = "Mariana Salazar",
-    servicio = "Corte de cabello",
-    duracion = "120 minutos",
-    horaInicio = "12:00 AM", mensajeBagde = "Confirmada",
-    colorBagde = EstadoConfirmadaFondo,
-    colorTextoBagde = EstadoConfirmada,
+            GalaText(
+              "Canceladas",
+              colorTexto = TextoHint,
 
+              estilo = Typography.bodySmall
+            )
+          }
+        }
 
-    )
-}
+        items(7) {
+            AppoinmentDetailCard(
+                nombreCliente = "Mariana Salazar",
+                servicio = "Corte de cabello",
+                duracion = "120 minutos",
+                horaInicio = "12:00 AM",
+                mensajeBagde = "Confirmada",
+                colorBagde = EstadoConfirmadaFondo,
+                colorTextoBagde = EstadoConfirmada,
+            )
+        }
+    }
 }
 
 @Preview
