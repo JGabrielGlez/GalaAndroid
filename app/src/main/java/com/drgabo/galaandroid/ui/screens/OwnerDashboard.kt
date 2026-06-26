@@ -61,7 +61,7 @@ fun OwnerDashboard(nombrePantalla: String = "Hola, María") {
                     onClick = {},
                     modifier = Modifier
                       .padding(horizontal = 8.dp, vertical = 4.dp)
-                      .width(120.dp),
+                      .width(100.dp),
                   colors = ButtonDefaults.buttonColors(containerColor =
                   AcentoSuave)
 
@@ -78,7 +78,7 @@ fun OwnerDashboard(nombrePantalla: String = "Hola, María") {
             modifier = Modifier
 
               .padding(horizontal = 8.dp, vertical = 4.dp)
-              .width(120.dp),
+              .width(100.dp),
             colors = ButtonDefaults.buttonColors(
               contentColor = NeutroBorde,
 
