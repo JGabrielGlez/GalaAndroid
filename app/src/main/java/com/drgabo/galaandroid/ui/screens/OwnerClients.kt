@@ -11,8 +11,14 @@ fun OwnerClients(){
         nombrePantalla = "Clientes",
         onFabClick = {},
         showFab = true,
+        searchBarPlaceholder = "Buscar cliente",
+        showSearchBar = true,
+        searchBarQuery = "",
+        onSearchBarOnQueryChange = {},
+
         ) {
         //será la lazy column de todas las card de los clientes, sin olvidar la parte del search bar
+
     }
 }
 
