@@ -39,7 +39,8 @@ fun ClientCardDetail(
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .height(64.dp),
+            .height(64.dp)
+            .background(Color.Transparent),
         colors = CardDefaults.cardColors(contentColor = Color.Transparent)
     ) {Column() {
         Row(

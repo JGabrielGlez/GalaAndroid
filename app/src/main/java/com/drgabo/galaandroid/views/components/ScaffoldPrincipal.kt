@@ -40,6 +40,9 @@ fun ScaffoldPrincipal(
     searchBarQuery: String = "",
     onSearchBarOnQueryChange: (String) -> Unit = {},
     esPantallaClientes: Boolean = false,
+
+    currentRoute: String?,
+    onNavigate: (String)->Unit,
     content: LazyListScope.() -> Unit,
 
     ) {
@@ -81,7 +84,10 @@ fun ScaffoldPrincipal(
                 }
             },
             bottomBar = {
-                NavBar()
+                NavBar(
+                    currentRoute =currentRoute,
+                    onNavigate = onNavigate
+                )
             },
             floatingActionButton = {
                 if (showFab)
@@ -95,8 +101,7 @@ fun ScaffoldPrincipal(
                 verticalArrangement = Arrangement.spacedBy(
                     space = spacing,
                 ),
-            ) {
-                content()
+            ) { content()
             }
         }
     }

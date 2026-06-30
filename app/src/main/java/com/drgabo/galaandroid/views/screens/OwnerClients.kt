@@ -1,50 +1,76 @@
 package com.drgabo.galaandroid.views.screens
 
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.HorizontalDivider
+import androidx.compose.foundation.lazy.items
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.drgabo.galaandroid.viewmodels.OwnerClientsViewModel
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import com.drgabo.galaandroid.views.components.ClientCardDetail
+import com.drgabo.galaandroid.views.components.GalaText
 import com.drgabo.galaandroid.views.components.ScaffoldPrincipal
-import com.drgabo.galaandroid.views.theme.AcentoSuave
+
 import com.drgabo.galaandroid.views.theme.GalaAndroidTheme
 
 
 @Composable
-fun OwnerClients(){
+fun OwnerClients(
+    currentRoute:String?,
+    onNavigate:(String)-> Unit
+) {
+
+
+    val viewModel: OwnerClientsViewModel = viewModel()
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+
+    //Se activa al lanzar la pantalla
+    LaunchedEffect(Unit) {
+        viewModel.loadClients()
+    }
+
     ScaffoldPrincipal(
         nombrePantalla = "Clientes",
         onFabClick = {},
         showFab = true,
         searchBarPlaceholder = "Buscar cliente",
         showSearchBar = true,
-        searchBarQuery = "",
-        onSearchBarOnQueryChange = {},
-        esPantallaClientes=true,
+        searchBarQuery = uiState.query,
+        //:: referencia una función sin ejecutarla en ese momento.
+        onSearchBarOnQueryChange = viewModel::onQueryChange,
+        esPantallaClientes = true,
+        currentRoute = currentRoute,
+        onNavigate = onNavigate,
         ) {
 
-        //será la lazy column de todas las card de los clientes, sin olvidar la parte del search bar
-        items(
-            count = 7,
-
-        ){
-            ClientCardDetail(nombre="Gabrielon",
-                ultimaVisita = "ayer",
-                noCitas = 3
-            )
-          //  HorizontalDivider(thickness = 1.dp, color = AcentoSuave)
+        if (uiState.isLoading) {
+            item {
+                GalaText(texto = "Cargando clientes")
+            }
+        }else if (uiState.mostrarEstadoVacio){
+            item { GalaText(texto = "No hay clientes registrados") }
+        }else if(uiState.mostrarSinResultados){
+            item{GalaText(texto = "No se encontraron coincidencias")}
+        }else{
+            //significa que ya pasó todos los filtros y sí hay algo que renderizar
+            items(uiState.clientesFiltrados) { client ->
+                ClientCardDetail(
+                    nombre = client.nombre,
+                    ultimaVisita = client.ultimaVisitaAt,
+                    noCitas = client.appointmentCount ?: 0
+                )
+            }
 
         }
+
     }
 }
 
 
 @Preview(showBackground = true, widthDp = 390)
 @Composable
-fun MostrarPantalla(){
+fun MostrarPantalla() {
     GalaAndroidTheme {
         OwnerClients()
     }

@@ -15,6 +15,8 @@ data class Client(
     val historialReciente: List<HistorialRecienteDto>? = null,
     val ultimaCitaStatus: AppointmentStatus? = null
 
+
+
     )
 
 

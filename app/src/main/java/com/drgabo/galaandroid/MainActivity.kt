@@ -3,10 +3,11 @@ package com.drgabo.galaandroid
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
+import com.drgabo.galaandroid.navigation.AppHost
+import com.drgabo.galaandroid.views.theme.GalaAndroidTheme
 
 class MainActivity : ComponentActivity(){
      override fun onCreate(savedInstanceState: Bundle?){
@@ -14,9 +15,9 @@ class MainActivity : ComponentActivity(){
             savedInstanceState
         )
         setContent{
-            //aquí ya se pueden empezar a llamar elementos composables para construir la app
-            MaterialTheme(){
-                Greetin("Soy Gabriel ")
+            GalaAndroidTheme{
+                //no abre una pantalla fija, sino el flujo de navegación completo
+                AppHost()
             }
         }
     }

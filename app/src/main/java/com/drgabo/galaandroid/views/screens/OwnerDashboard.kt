@@ -31,14 +31,21 @@ import com.drgabo.galaandroid.views.theme.MonstserratFamily
 import com.drgabo.galaandroid.views.theme.NeutroBorde
 import com.drgabo.galaandroid.views.theme.TextoHint
 import com.drgabo.galaandroid.views.theme.Typography
+import kotlin.String
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun OwnerDashboard(nombrePantalla: String = "Inicio") {
+fun OwnerDashboard(
+    nombrePantalla: String = "Inicio",
+    currentRoute: String?,
+    onNavigate: (String) -> Unit
+) {
     //var presses by remember { mutableIntStateOf(0) }
     ScaffoldPrincipal(
         showFab = true,
         nombrePantalla = nombrePantalla,
+        currentRoute = currentRoute,
+        onNavigate = onNavigate
     ) {
 
         item { SummaryCardsRow() }
@@ -118,10 +125,11 @@ fun OwnerDashboard(nombrePantalla: String = "Inicio") {
         }
     }
 }
-
+/*
 @Preview
 @Composable
 fun MostrarAgenda() {
     OwnerDashboard(nombrePantalla = "Gabriel")
 
 }
+*/
