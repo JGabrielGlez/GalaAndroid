@@ -7,7 +7,11 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.drgabo.galaandroid.viewmodels.OwnerClientsViewModel
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.tooling.preview.Preview
+import com.drgabo.galaandroid.data.FakeClientsRepository
+import com.drgabo.galaandroid.navigation.AppDestinations
+import com.drgabo.galaandroid.viewmodels.OwnerClientsViewModelFactory
 import com.drgabo.galaandroid.views.components.ClientCardDetail
 import com.drgabo.galaandroid.views.components.GalaText
 import com.drgabo.galaandroid.views.components.ScaffoldPrincipal
@@ -20,9 +24,13 @@ fun OwnerClients(
     currentRoute:String?,
     onNavigate:(String)-> Unit
 ) {
-
-
-    val viewModel: OwnerClientsViewModel = viewModel()
+    //remember porque la pantalla se puede volver a renderizar, por lo que no
+    //se quiere perder lo que se tenía dentro de la pantalla al suceder.
+    val repository = remember{ FakeClientsRepository() }
+    val factory = remember {
+        OwnerClientsViewModelFactory(repository)
+    }
+    val viewModel: OwnerClientsViewModel = viewModel(factory=factory)
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
     //Se activa al lanzar la pantalla
@@ -67,11 +75,20 @@ fun OwnerClients(
     }
 }
 
+class OwnerClientsRoot(){
+    //dentro de esta clase irá todo lo que es la lógica de conexión,
+    //lo que no se de renderizado; aunque cabe mencionar que dentro de
+    //Este archivo se mandará a llamar a la clase que pinta la pantalla.
+}
+
 
 @Preview(showBackground = true, widthDp = 390)
 @Composable
 fun MostrarPantalla() {
     GalaAndroidTheme {
-        OwnerClients()
+        OwnerClients(
+            currentRoute = AppDestinations.OWNER_CLIENTS,
+            onNavigate = {}
+        )
     }
 }

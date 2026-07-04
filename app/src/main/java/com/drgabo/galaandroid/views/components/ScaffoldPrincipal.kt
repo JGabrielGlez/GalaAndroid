@@ -24,6 +24,7 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.drgabo.galaandroid.navigation.AppDestinations
 import com.drgabo.galaandroid.views.components.*
 import com.drgabo.galaandroid.views.theme.GalaAndroidTheme
 import com.drgabo.galaandroid.views.theme.TextoSecundario
@@ -115,6 +116,8 @@ fun MostrarEsqueleto() {
         showFab = true,
         showSearchBar = true,
         searchBarPlaceholder = "hola",
+        currentRoute = AppDestinations.OWNER_CLIENTS,
+        onNavigate = {},
     ) {
 
 
