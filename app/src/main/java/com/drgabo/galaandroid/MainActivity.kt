@@ -7,7 +7,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import com.drgabo.galaandroid.navigation.AppHost
-import com.drgabo.galaandroid.views.theme.GalaAndroidTheme
+import com.drgabo.galaandroid.core.ui.theme.GalaAndroidTheme
 
 class MainActivity : ComponentActivity(){
      override fun onCreate(savedInstanceState: Bundle?){
@@ -15,7 +15,7 @@ class MainActivity : ComponentActivity(){
             savedInstanceState
         )
         setContent{
-            GalaAndroidTheme{
+            _root_ide_package_.com.drgabo.galaandroid.core.ui.theme.GalaAndroidTheme {
                 //no abre una pantalla fija, sino el flujo de navegación completo
                 AppHost()
             }
