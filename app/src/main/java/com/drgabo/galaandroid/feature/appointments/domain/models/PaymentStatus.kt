@@ -1,9 +1,18 @@
 package com.drgabo.galaandroid.feature.appointments.domain.models
 
-enum class PaymentStatus{
-    PENDING,
-    PAID,
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
+
+enum class PaymentStatus {
+    UNPAID,
+
+    PARTIALLY_PAID,
+
     FAILED,
+
     REFUNDED,
-    CANCELLED
+
+    EXPIRED,
+    PAID,
+
 }

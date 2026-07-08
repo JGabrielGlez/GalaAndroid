@@ -1,8 +1,11 @@
-package com.drgabo.galaandroid.feature.clients.domain.models
+package com.drgabo.galaandroid.feature.clients.data.remote.dto
 
 import com.drgabo.galaandroid.feature.appointments.domain.models.AppointmentStatus
+import com.drgabo.galaandroid.feature.appointments.domain.models.PaymentStatus
+import kotlinx.serialization.Serializable
 
-data class Client(
+@Serializable
+data class ClientDto(
     val id: String,
     val nombre: String,
     val telefono: String,
@@ -14,6 +17,6 @@ data class Client(
     val appointmentCount: Int? = 0,
     val proximaCitaId: String? = null,
     val proximaCitaAt: String? = null,
-    val historialReciente: List<ClientRecentAppointment>? = null,
+    val historialReciente: List<HistorialRecienteDto>? = null,
     val ultimaCitaStatus: AppointmentStatus? = null
 )

@@ -3,8 +3,8 @@ package com.drgabo.galaandroid.feature.clients.data.local
 import com.drgabo.galaandroid.feature.appointments.domain.models.AppointmentStatus
 import com.drgabo.galaandroid.feature.clients.domain.models.Client
 import com.drgabo.galaandroid.feature.clients.domain.repositories.ClientsRepository
-import com.drgabo.galaandroid.feature.clients.domain.models.HistorialRecienteDto
 import com.drgabo.galaandroid.feature.appointments.domain.models.PaymentStatus
+import com.drgabo.galaandroid.feature.clients.domain.models.ClientRecentAppointment
 
 
 //Lista temporal de clientes (Se actualizará con los datos de la api después)
@@ -22,14 +22,14 @@ private val clientesDemo = listOf(
         proximaCitaId = "appt_001",
         proximaCitaAt = "2026-07-01 11:00",
         historialReciente = listOf(
-            HistorialRecienteDto(
+            ClientRecentAppointment(
                 appointmentId = "appt_001",
                 scheduledStart = "2026-07-01 11:00",
                 appointmentStatus = AppointmentStatus.CONFIRMED,
-                paymentStatus = PaymentStatus.PENDING,
+                paymentStatus = PaymentStatus.UNPAID,
                 serviceNombre = "Corte de cabello"
             ),
-            HistorialRecienteDto(
+            ClientRecentAppointment(
                 appointmentId = "appt_000",
                 scheduledStart = "2026-06-20 12:00",
                 appointmentStatus = AppointmentStatus.COMPLETED,
@@ -52,11 +52,11 @@ private val clientesDemo = listOf(
         proximaCitaId = "appt_002",
         proximaCitaAt = "2026-07-03 16:30",
         historialReciente = listOf(
-            HistorialRecienteDto(
+            ClientRecentAppointment(
                 appointmentId = "appt_002",
                 scheduledStart = "2026-07-03 16:30",
                 appointmentStatus = AppointmentStatus.PENDING,
-                paymentStatus = PaymentStatus.PENDING,
+                paymentStatus = PaymentStatus.UNPAID,
                 serviceNombre = "Tinte"
             )
         ),
@@ -75,11 +75,11 @@ private val clientesDemo = listOf(
         proximaCitaId = null,
         proximaCitaAt = null,
         historialReciente = listOf(
-            HistorialRecienteDto(
+            ClientRecentAppointment(
                 appointmentId = "appt_003",
                 scheduledStart = "2026-06-15 10:00",
                 appointmentStatus = AppointmentStatus.NO_SHOW,
-                paymentStatus = PaymentStatus.CANCELLED,
+                paymentStatus = PaymentStatus.EXPIRED,
                 serviceNombre = "Corte premium"
             )
         ),
@@ -98,7 +98,7 @@ private val clientesDemo = listOf(
         proximaCitaId = "appt_004",
         proximaCitaAt = "2026-06-30 18:30",
         historialReciente = listOf(
-            HistorialRecienteDto(
+            ClientRecentAppointment(
                 appointmentId = "appt_004",
                 scheduledStart = "2026-06-30 18:30",
                 appointmentStatus = AppointmentStatus.CONFIRMED,
@@ -121,11 +121,11 @@ private val clientesDemo = listOf(
         proximaCitaId = "appt_005",
         proximaCitaAt = "2026-07-05 09:00",
         historialReciente = listOf(
-            HistorialRecienteDto(
+            ClientRecentAppointment(
                 appointmentId = "appt_005",
                 scheduledStart = "2026-07-05 09:00",
                 appointmentStatus = AppointmentStatus.PENDING,
-                paymentStatus = PaymentStatus.PENDING,
+                paymentStatus = PaymentStatus.UNPAID,
                 serviceNombre = "Corte clasico"
             )
         ),
@@ -144,7 +144,7 @@ private val clientesDemo = listOf(
         proximaCitaId = "appt_006",
         proximaCitaAt = "2026-07-02 12:00",
         historialReciente = listOf(
-            HistorialRecienteDto(
+            ClientRecentAppointment(
                 appointmentId = "appt_006",
                 scheduledStart = "2026-07-02 12:00",
                 appointmentStatus = AppointmentStatus.CONFIRMED,
@@ -167,7 +167,7 @@ private val clientesDemo = listOf(
         proximaCitaId = null,
         proximaCitaAt = null,
         historialReciente = listOf(
-            HistorialRecienteDto(
+            ClientRecentAppointment(
                 appointmentId = "appt_007",
                 scheduledStart = "2026-05-29 08:00",
                 appointmentStatus = AppointmentStatus.CANCELLED,
@@ -190,7 +190,7 @@ private val clientesDemo = listOf(
         proximaCitaId = "appt_008",
         proximaCitaAt = "2026-07-04 15:30",
         historialReciente = listOf(
-            HistorialRecienteDto(
+            ClientRecentAppointment(
                 appointmentId = "appt_008",
                 scheduledStart = "2026-07-04 15:30",
                 appointmentStatus = AppointmentStatus.CONFIRMED,
@@ -213,7 +213,7 @@ private val clientesDemo = listOf(
         proximaCitaId = "appt_009",
         proximaCitaAt = "2026-07-06 19:00",
         historialReciente = listOf(
-            HistorialRecienteDto(
+            ClientRecentAppointment(
                 appointmentId = "appt_009",
                 scheduledStart = "2026-07-06 19:00",
                 appointmentStatus = AppointmentStatus.PENDING,
@@ -236,7 +236,7 @@ private val clientesDemo = listOf(
         proximaCitaId = "appt_010",
         proximaCitaAt = "2026-07-08 10:30",
         historialReciente = listOf(
-            HistorialRecienteDto(
+            ClientRecentAppointment(
                 appointmentId = "appt_010",
                 scheduledStart = "2026-07-08 10:30",
                 appointmentStatus = AppointmentStatus.CONFIRMED,
