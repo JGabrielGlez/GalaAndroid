@@ -1,6 +1,6 @@
 package com.drgabo.galaandroid.feature.appointments.domain.models
 
-class AppointmentPaymentSummary (
+data class AppointmentPaymentSummary (
     val amountDue: Int,
     val amountPaid: Int,
     val remainingAmount: Int,

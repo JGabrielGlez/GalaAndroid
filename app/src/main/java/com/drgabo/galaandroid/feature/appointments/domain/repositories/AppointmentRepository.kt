@@ -5,8 +5,14 @@ import com.drgabo.galaandroid.feature.appointments.domain.models.Appointment
 
 //exponer operaciones que tengan sentido para la app
 interface AppointmentRepository {
-    fun getAppointmens(): List<Appointment>
-    fun getAppointmentById(id: String): Appointment?
+     suspend fun getAppointments(): List<Appointment>
+
+    //no puede retornar nulo porque es una cita de una lista
+    //que ya se cargó, por lo que es imposible pedir una que
+    //no exista, aparte no se borran como tal de la bd
+
+     //no es suspend porque consultará los datos que ya fueron traidos de la api
+     fun getAppointmentById(id: String): Appointment
     //puede no encontrar nada
     //Este debe definir lo que es el CRUD de todo,
     //definir más delante lo que son las funciones para
