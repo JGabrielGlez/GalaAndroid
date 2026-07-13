@@ -1,34 +1,36 @@
 package com.drgabo.galaandroid.feature.appointments.presentation.agenda.showAgenda
 
 
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
+
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
+
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Snackbar
+
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.drgabo.galaandroid.core.ui.components.AppoinmentDetailCard
+import com.drgabo.galaandroid.core.ui.components.FullScreenModal
 import com.drgabo.galaandroid.core.ui.components.GalaText
 import com.drgabo.galaandroid.core.ui.components.ScaffoldPrincipal
 import com.drgabo.galaandroid.core.ui.components.SummaryCardsRow
-import com.drgabo.galaandroid.core.ui.theme.AcentoSuave
-import com.drgabo.galaandroid.core.ui.theme.EstadoConfirmada
-import com.drgabo.galaandroid.core.ui.theme.EstadoConfirmadaFondo
 import com.drgabo.galaandroid.core.ui.theme.GalaAndroidTheme
 import com.drgabo.galaandroid.core.ui.theme.MonstserratFamily
 import com.drgabo.galaandroid.core.ui.theme.Typography
 import com.drgabo.galaandroid.feature.appointments.data.local.FakeAppointmenRepository
 import com.drgabo.galaandroid.feature.appointments.domain.models.Appointment
-import com.drgabo.galaandroid.feature.appointments.domain.repositories.AppointmentRepository
+
 import com.drgabo.galaandroid.navigation.AppDestinations
 
 
@@ -67,65 +69,75 @@ fun OwnerAgendaScreen(
                 modifier = Modifier.padding(vertical = 12.dp)
             )
         }
-            // Evaluar primero los estados bloqueantes, porque impiden mostrar el contenido normal de la pantalla. Aquellos estados que son mutuamente excluyentes, es decir, no pueden existir dos al mismo tiempo, solo uno debe de mostrarse
-            when {
-                uiState.showEmptyState -> {
-                    //mostrar estado vacío, por el momento será un texto sencillo
-                   item {
-                       GalaText(texto = "Estado vacío mostrándose")
-                   }
-                }
+        // Evaluar primero los estados bloqueantes, porque impiden mostrar el contenido normal de la pantalla. Aquellos estados que son mutuamente excluyentes, es decir, no pueden existir dos al mismo tiempo, solo uno debe de mostrarse
+        when {
+            uiState.showEmptyState -> {
+                //mostrar estado vacío, por el momento será un texto sencillo
+                item {
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.Center,
 
-                uiState.showFullScreenLoading -> {
-                    //mostrar que toda la pantalla está cargando
-                    item {
-                        GalaText(texto = "Cargando toda la pantalla")
+                    ) {
+                        GalaText("No hay citas por el momento")
+                        Button(
+                           onClick = {},
+                           colors= ButtonDefaults
+                        ) {
+                            GalaText("Agendar cita")
+                        }
                     }
-                }
-
-                uiState.showFullScreenError -> {
-                   item {
-
-                       GalaText("Mostrando erro de toda la pantalla")
-                   }
-                }
-
-                uiState.showContent -> {
-                    //Esto mostrará lo que es la pantalla principal, la pantalla "correcta"
-                    items(uiState.appointments){
-                       appointment->
-                        val services=appointment.serviceSummary
-                        val size=services.size
-                        var serviceCardName=services[0].nombre
-                        if (size>1)serviceCardName= "$serviceCardName..."
-
-                        AppoinmentDetailCard(
-                            nombreCliente = appointment.client.nombre,
-                            //todo solo muestro el primer servicio
-                            servicio = serviceCardName,
-                            duracion = services.sumOf{
-                                service ->
-                                service.duracionMin
-                            }.toString(),
-                            horaInicio = appointment.scheduledStart,
-                            mensajeBagde = appointment.appointmentStatus.toDisplayText(),
-                            colorBagde =appointment.appointmentStatus.toBadgeColorBg(),
-                            colorTextoBagde = appointment.appointmentStatus.toBadgeColorText(),
-                            //iconButtonIcon = TODO(),
-                            //iconOnClick = TODO(),
-                            //modifier = TODO()
-                        )
-                    }
-                }
-
                 }
             }
 
+            uiState.showFullScreenLoading -> {
+                //mostrar que toda la pantalla está cargando
+                item {
+                    FullScreenModal("Cargando las citas del día.")
+                }
+            }
 
-            // Si está cargando por primera vez, se debe mostrar la carga completa y no la lista.
-            // Si ocurrió un error inicial y aún no hay datos visibles, se debe mostrar la pantalla de error completa.
-            // Si la consulta terminó correctamente pero no hay citas, se debe mostrar el estado vacío.
-            // Si ninguna de esas condiciones se cumple, entonces se puede mostrar el contenido principal.
+            uiState.showFullScreenError -> {
+                item {
+
+                    GalaText("Mostrando erro de toda la pantalla")
+                }
+            }
+
+            uiState.showContent -> {
+                //Esto mostrará lo que es la pantalla principal, la pantalla "correcta"
+                items(uiState.appointments) { appointment ->
+                    val services = appointment.serviceSummary
+                    val size = services.size
+                    var serviceCardName = services[0].nombre
+                    if (size > 1) serviceCardName = "$serviceCardName..."
+
+                    AppoinmentDetailCard(
+                        nombreCliente = appointment.client.nombre,
+                        //todo solo muestro el primer servicio
+                        servicio = serviceCardName,
+                        duracion = services.sumOf { service ->
+                            service.duracionMin
+                        }.toString(),
+                        horaInicio = appointment.scheduledStart,
+                        mensajeBagde = appointment.appointmentStatus.toDisplayText(),
+                        colorBagde = appointment.appointmentStatus.toBadgeColorBg(),
+                        colorTextoBagde = appointment.appointmentStatus.toBadgeColorText(),
+                        //iconButtonIcon = TODO(),
+                        //iconOnClick = TODO(),
+                        //modifier = TODO()
+                    )
+                }
+            }
+
+        }
+    }
+
+
+    // Si está cargando por primera vez, se debe mostrar la carga completa y no la lista.
+    // Si ocurrió un error inicial y aún no hay datos visibles, se debe mostrar la pantalla de error completa.
+    // Si la consulta terminó correctamente pero no hay citas, se debe mostrar el estado vacío.
+    // Si ninguna de esas condiciones se cumple, entonces se puede mostrar el contenido principal.
 
 // Dentro del contenido principal, evaluar estados secundarios que no bloquean toda la pantalla.
 // Si hay una recarga en curso y ya existe contenido, se debe mostrar un indicador de actualización.
@@ -138,12 +150,12 @@ fun OwnerAgendaScreen(
 // La pantalla solo debe leer el UiState y reaccionar a él.
 // La pantalla no debe cargar datos por sí sola ni consultar el repository.
 // Las acciones del usuario deben enviarse al ViewModel mediante callbacks.
-        }
+}
 
 
 @Preview
 @Composable
-fun EmptyState(){
+fun EmptyState() {
     GalaAndroidTheme {
         OwnerAgendaScreen(
             currentRoute = AppDestinations.OWNER_AGENDA,
@@ -162,9 +174,10 @@ fun EmptyState(){
         )
     }
 }
+
 @Preview
 @Composable
-fun FullScreenLoading(){
+fun FullScreenLoading() {
 
     GalaAndroidTheme {
         OwnerAgendaScreen(
@@ -182,9 +195,10 @@ fun FullScreenLoading(){
         )
     }
 }
+
 @Preview
 @Composable
-fun FullScreenError(){
+fun FullScreenError() {
 
     GalaAndroidTheme {
         OwnerAgendaScreen(
@@ -206,13 +220,11 @@ fun FullScreenError(){
 }
 
 
-
-
 @Preview
 @Composable
-fun NormalState(){
+fun NormalState() {
 
-    val repo= kotlinx.coroutines.runBlocking {
+    val repo = kotlinx.coroutines.runBlocking {
         FakeAppointmenRepository().getAppointments()
 
     }
@@ -221,7 +233,7 @@ fun NormalState(){
             currentRoute = AppDestinations.OWNER_AGENDA,
             onNavigate = {},
             uiState = OwnerAgendaUiState(
-                appointments =repo
+                appointments = repo
             ),
             onErrorConsumed = {},
             onAppointmentUnselected = {},
