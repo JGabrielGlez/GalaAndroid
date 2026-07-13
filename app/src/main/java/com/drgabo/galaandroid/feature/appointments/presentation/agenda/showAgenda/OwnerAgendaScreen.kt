@@ -118,10 +118,6 @@ fun OwnerAgendaScreen(
                     }
                 }
 
-                else -> {
-                    if (uiState.showErrorSnackbar) {
-                        //Este es un estado en el cual se muetran errores por encima de la pantalla actual, será un modal lo que se mostrará
-                    }
                 }
             }
 
@@ -143,7 +139,7 @@ fun OwnerAgendaScreen(
 // La pantalla no debe cargar datos por sí sola ni consultar el repository.
 // Las acciones del usuario deben enviarse al ViewModel mediante callbacks.
         }
-    }
+
 
 @Preview
 @Composable
@@ -152,7 +148,12 @@ fun EmptyState(){
         OwnerAgendaScreen(
             currentRoute = AppDestinations.OWNER_AGENDA,
             onNavigate = {},
-            uiState = OwnerAgendaUiState(),
+            uiState = OwnerAgendaUiState(
+                appointments = emptyList(),
+                isLoading = false,
+                errorMessage = null,
+                hasLoadedOnce = true
+            ),
             onErrorConsumed = {},
             onAppointmentUnselected = {},
             onCreateAppointmentRequested = {},
