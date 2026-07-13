@@ -24,7 +24,8 @@ data class OwnerAppointmentListItemDto(
     val notes: String? = null,
     val commercialStatus: CommercialStatusDto? = null,
     val paymentSummary: PaymentSummaryDto? = null,
-    val statusTimeline: StatusTimeLineDto? = null
+    val statusTimeline: StatusTimeLineDto? = null,
+    val cancellationReason: String? = null,
 )
 
 

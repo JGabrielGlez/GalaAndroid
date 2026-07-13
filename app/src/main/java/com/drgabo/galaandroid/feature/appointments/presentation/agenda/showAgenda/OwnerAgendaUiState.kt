@@ -5,6 +5,9 @@ package com.drgabo.galaandroid.feature.appointments.presentation.agenda.showAgen
 //ya se delegaron a los otros archivos como lo son las capas de data y domain
 //este solo se preocupa por los estados que puede tener esta pantalla, y está relacionada con los appointments
 import com.drgabo.galaandroid.feature.appointments.domain.models.Appointment
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.util.Locale
 
 //Objeto que representa el estado completo de una pantalla en un momento dado
 // eslo que la UI necesita para dibujarse
@@ -19,8 +22,22 @@ data class OwnerAgendaUiState(
     val errorMessage: String? = null,
     val selectedAppointment: Appointment? = null,
     // Antes se llamaba showCreateNewAppointment; ahora describe una condición visible.
-    val isCreateAppointmentSheetVisible: Boolean = false
+    val isCreateAppointmentSheetVisible: Boolean = false,
+    //mostrar fecha actual
+    val currentDate: LocalDate = LocalDate.now()
 ) {
+    val showFormattedCurrentDay: String
+        get() =
+            currentDate.format(
+                DateTimeFormatter.ofPattern(
+                    "EEEE d 'de' MMMM",
+                    Locale("es", "MX")
+                )
+            ).replaceFirstChar { it.uppercase() }
+
+
+    //Retornar la lista de appintments agrupadas
+    val groupedAppointments:Lis
     // Antes, hasData era genérico; ahora el nombre indica qué datos se comprueban.
     val hasAppointments: Boolean
         get() = appointments.isNotEmpty()
@@ -35,16 +52,16 @@ data class OwnerAgendaUiState(
     // hasLoadedOnce evita mostrar el estado vacío antes de consultar la API por primera vez.
     val showEmptyState: Boolean
         get() = hasLoadedOnce &&
-            !isLoading &&
-            errorMessage == null &&
-            !hasAppointments
+                !isLoading &&
+                errorMessage == null &&
+                !hasAppointments
 
     // Antes terminaba en State, una palabra redundante dentro de una clase UiState.
     val showFullScreenError: Boolean
         get() = hasLoadedOnce &&
-            !isLoading &&
-            errorMessage != null &&
-            !hasAppointments
+                !isLoading &&
+                errorMessage != null &&
+                !hasAppointments
 
     // Antes, showNormalError no explicaba su representación; este error conserva el contenido.
     val showErrorSnackbar: Boolean
@@ -53,6 +70,7 @@ data class OwnerAgendaUiState(
     // Antes dependía de !isLoading y ocultaba la lista durante el polling o una recarga.
     val showContent: Boolean
         get() = hasAppointments
+
 
     // Se eliminaron showAppointment/hideAppointment: que selectedAppointment sea nulo o no
     // ya es la única fuente de verdad para mostrar u ocultar el detalle.

@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Button
@@ -42,6 +43,9 @@ import com.drgabo.galaandroid.feature.appointments.data.local.FakeAppointmenRepo
 import com.drgabo.galaandroid.feature.appointments.domain.models.Appointment
 
 import com.drgabo.galaandroid.navigation.AppDestinations
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.util.Locale
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -71,11 +75,10 @@ fun OwnerAgendaScreen(
         //Esto siempre se muestra, aunque tengo que adaptar el summaryCardsRow para traer datos desde lo que es la api para el resumen
         item { SummaryCardsRow() }
         item {
-            Text(
-                text = "Miércoles 7 de abril",
-                style = Typography.bodyLarge,
-                fontWeight = FontWeight.Bold,
-                fontFamily = MonstserratFamily,
+            GalaText(
+                texto = uiState.showFormattedCurrentDay,
+                estilo = Typography.bodyLarge,
+                peso = FontWeight.Bold,
                 modifier = Modifier.padding(vertical = 12.dp)
             )
         }
@@ -85,6 +88,7 @@ fun OwnerAgendaScreen(
 
                 item {
                     Column(
+                        modifier = Modifier.fillMaxWidth(),
                         horizontalAlignment = Alignment.CenterHorizontally,
                         verticalArrangement = Arrangement.spacedBy(32.dp),
 
@@ -105,12 +109,15 @@ fun OwnerAgendaScreen(
                                 "Por el momento no hay citas para el día de hoy, agenda una.",
                             textoCentrado = true,
                             peso= FontWeight.SemiBold,
+                            modifier = Modifier.fillMaxWidth(.7f)
 
                         )
                         GalaButton(
                             onClick = {},
                             text = "Agendar cita",
                             isPrimary = true,
+                            modifier = Modifier.fillMaxWidth(.6f)
+
 
                         )
 

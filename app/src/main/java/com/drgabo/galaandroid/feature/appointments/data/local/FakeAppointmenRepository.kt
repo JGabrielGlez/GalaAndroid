@@ -4,12 +4,37 @@ import com.drgabo.galaandroid.feature.appointments.domain.models.Appointment
 import com.drgabo.galaandroid.feature.appointments.domain.models.AppointmentClient
 import com.drgabo.galaandroid.feature.appointments.domain.models.AppointmentPaymentSummary
 import com.drgabo.galaandroid.feature.appointments.domain.models.AppointmentService
+import com.drgabo.galaandroid.feature.appointments.domain.models.OwnerAgendaDay
 import com.drgabo.galaandroid.feature.appointments.domain.models.AppointmentSource
 import com.drgabo.galaandroid.feature.appointments.domain.models.AppointmentStatus
 import com.drgabo.galaandroid.feature.appointments.domain.models.PaymentStatus
 import com.drgabo.galaandroid.feature.appointments.domain.repositories.AppointmentRepository
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.util.Locale
 
 class FakeAppointmenRepository : AppointmentRepository {
+    override suspend fun getAgendaDays(): List<OwnerAgendaDay> {
+        return appointmentsDemo
+            .groupBy { appointment ->
+                appointment.scheduledStart.substringBefore(" ")
+            }
+            .toSortedMap()
+            .map { (date, appointments) ->
+                val localDate = LocalDate.parse(date)
+                OwnerAgendaDay(
+                    date = date,
+                    label = localDate.format(
+                        DateTimeFormatter.ofPattern(
+                            "EEEE, d 'de' MMMM",
+                            Locale("es", "MX")
+                        )
+                    ),
+                    appointments = appointments,
+                )
+            }
+    }
+
     override suspend fun getAppointments(): List<Appointment> {
         return appointmentsDemo
     }

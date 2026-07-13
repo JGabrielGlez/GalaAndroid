@@ -1,10 +1,13 @@
 package com.drgabo.galaandroid.feature.appointments.domain.repositories
 
 import com.drgabo.galaandroid.feature.appointments.domain.models.Appointment
+import com.drgabo.galaandroid.feature.appointments.domain.models.OwnerAgendaDay
 
 
 //exponer operaciones que tengan sentido para la app
 interface AppointmentRepository {
+     suspend fun getAgendaDays(): List<OwnerAgendaDay>
+
      suspend fun getAppointments(): List<Appointment>
 
     //no puede retornar nulo porque es una cita de una lista
