@@ -2,8 +2,12 @@ package com.drgabo.galaandroid.feature.appointments.presentation.agenda.showAgen
 
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Button
@@ -11,22 +15,28 @@ import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
 
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
 
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.drgabo.galaandroid.R
 import com.drgabo.galaandroid.core.ui.components.AppoinmentDetailCard
 import com.drgabo.galaandroid.core.ui.components.FullScreenModal
+import com.drgabo.galaandroid.core.ui.components.GalaButton
 import com.drgabo.galaandroid.core.ui.components.GalaText
 import com.drgabo.galaandroid.core.ui.components.ScaffoldPrincipal
 import com.drgabo.galaandroid.core.ui.components.SummaryCardsRow
 import com.drgabo.galaandroid.core.ui.theme.GalaAndroidTheme
 import com.drgabo.galaandroid.core.ui.theme.MonstserratFamily
+import com.drgabo.galaandroid.core.ui.theme.TextoSecundario
 import com.drgabo.galaandroid.core.ui.theme.Typography
 import com.drgabo.galaandroid.feature.appointments.data.local.FakeAppointmenRepository
 import com.drgabo.galaandroid.feature.appointments.domain.models.Appointment
@@ -72,20 +82,38 @@ fun OwnerAgendaScreen(
         // Evaluar primero los estados bloqueantes, porque impiden mostrar el contenido normal de la pantalla. Aquellos estados que son mutuamente excluyentes, es decir, no pueden existir dos al mismo tiempo, solo uno debe de mostrarse
         when {
             uiState.showEmptyState -> {
-                //mostrar estado vacío, por el momento será un texto sencillo
+
                 item {
                     Column(
                         horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.Center,
+                        verticalArrangement = Arrangement.spacedBy(32.dp),
 
                     ) {
-                        GalaText("No hay citas por el momento")
-                        Button(
-                           onClick = {},
-                           colors= ButtonDefaults
-                        ) {
-                            GalaText("Agendar cita")
+                        Box(
+                            modifier = Modifier.size(128.dp),
+                            contentAlignment = Alignment.Center
+                        ){
+                            Icon(
+                                painter= painterResource(R.drawable.calendar),
+                                contentDescription = "Calendario",
+                                modifier = Modifier.fillMaxSize(),
+                                tint = TextoSecundario
+                            )
                         }
+                        GalaText(
+                            texto=
+                                "Por el momento no hay citas para el día de hoy, agenda una.",
+                            textoCentrado = true,
+                            peso= FontWeight.SemiBold,
+
+                        )
+                        GalaButton(
+                            onClick = {},
+                            text = "Agendar cita",
+                            isPrimary = true,
+
+                        )
+
                     }
                 }
             }
@@ -174,74 +202,74 @@ fun EmptyState() {
         )
     }
 }
-
-@Preview
-@Composable
-fun FullScreenLoading() {
-
-    GalaAndroidTheme {
-        OwnerAgendaScreen(
-            currentRoute = AppDestinations.OWNER_AGENDA,
-            onNavigate = {},
-            uiState = OwnerAgendaUiState(
-                isLoading = true,
-                appointments = emptyList()
-            ),
-            onErrorConsumed = {},
-            onAppointmentUnselected = {},
-            onCreateAppointmentRequested = {},
-            onCreateAppointmentDismissed = {},
-            onAppointmentSelected = {}
-        )
-    }
-}
-
-@Preview
-@Composable
-fun FullScreenError() {
-
-    GalaAndroidTheme {
-        OwnerAgendaScreen(
-            currentRoute = AppDestinations.OWNER_AGENDA,
-            onNavigate = {},
-            uiState = OwnerAgendaUiState(
-                hasLoadedOnce = true,
-                isLoading = false,
-                errorMessage = "Hubo un error",
-                appointments = emptyList()
-            ),
-            onErrorConsumed = {},
-            onAppointmentUnselected = {},
-            onCreateAppointmentRequested = {},
-            onCreateAppointmentDismissed = {},
-            onAppointmentSelected = {}
-        )
-    }
-}
-
-
-@Preview
-@Composable
-fun NormalState() {
-
-    val repo = kotlinx.coroutines.runBlocking {
-        FakeAppointmenRepository().getAppointments()
-
-    }
-    GalaAndroidTheme {
-        OwnerAgendaScreen(
-            currentRoute = AppDestinations.OWNER_AGENDA,
-            onNavigate = {},
-            uiState = OwnerAgendaUiState(
-                appointments = repo
-            ),
-            onErrorConsumed = {},
-            onAppointmentUnselected = {},
-            onCreateAppointmentRequested = {},
-            onCreateAppointmentDismissed = {},
-            onAppointmentSelected = {}
-        )
-    }
-}
+//
+//@Preview
+//@Composable
+//fun FullScreenLoading() {
+//
+//    GalaAndroidTheme {
+//        OwnerAgendaScreen(
+//            currentRoute = AppDestinations.OWNER_AGENDA,
+//            onNavigate = {},
+//            uiState = OwnerAgendaUiState(
+//                isLoading = true,
+//                appointments = emptyList()
+//            ),
+//            onErrorConsumed = {},
+//            onAppointmentUnselected = {},
+//            onCreateAppointmentRequested = {},
+//            onCreateAppointmentDismissed = {},
+//            onAppointmentSelected = {}
+//        )
+//    }
+//}
+//
+//@Preview
+//@Composable
+//fun FullScreenError() {
+//
+//    GalaAndroidTheme {
+//        OwnerAgendaScreen(
+//            currentRoute = AppDestinations.OWNER_AGENDA,
+//            onNavigate = {},
+//            uiState = OwnerAgendaUiState(
+//                hasLoadedOnce = true,
+//                isLoading = false,
+//                errorMessage = "Hubo un error",
+//                appointments = emptyList()
+//            ),
+//            onErrorConsumed = {},
+//            onAppointmentUnselected = {},
+//            onCreateAppointmentRequested = {},
+//            onCreateAppointmentDismissed = {},
+//            onAppointmentSelected = {}
+//        )
+//    }
+//}
+//
+//
+//@Preview
+//@Composable
+//fun NormalState() {
+//
+//    val repo = kotlinx.coroutines.runBlocking {
+//        FakeAppointmenRepository().getAppointments()
+//
+//    }
+//    GalaAndroidTheme {
+//        OwnerAgendaScreen(
+//            currentRoute = AppDestinations.OWNER_AGENDA,
+//            onNavigate = {},
+//            uiState = OwnerAgendaUiState(
+//                appointments = repo
+//            ),
+//            onErrorConsumed = {},
+//            onAppointmentUnselected = {},
+//            onCreateAppointmentRequested = {},
+//            onCreateAppointmentDismissed = {},
+//            onAppointmentSelected = {}
+//        )
+//    }
+//}
 
 
