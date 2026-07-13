@@ -55,8 +55,8 @@ fun AppHost(){
         }
 
         //Dashboard
-        composable (route= AppDestinations.OWNER_DASHBOARD){
-            OwnerDashboard(
+        composable (route= AppDestinations.OWNER_AGENDA){
+            OwnerAgenda(
                 currentRoute = currentRoute,
                 onNavigate = onNavigate
             )

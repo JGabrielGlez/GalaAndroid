@@ -1,4 +1,4 @@
-package com.drgabo.galaandroid.feature.appointments.data.local
+    package com.drgabo.galaandroid.feature.appointments.data.local
 
 import com.drgabo.galaandroid.feature.appointments.domain.models.Appointment
 import com.drgabo.galaandroid.feature.appointments.domain.models.AppointmentClient

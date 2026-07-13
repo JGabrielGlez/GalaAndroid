@@ -6,17 +6,12 @@ import com.drgabo.galaandroid.core.ui.components.ScaffoldPrincipal
 
 @Composable
 fun OwnerAgenda(
-    nombrePantalla: String = "Agenda",
     currentRoute: String?,
     onNavigate:(String)->Unit
 ){
-    ScaffoldPrincipal(
-        nombrePantalla=nombrePantalla,
-        showFab = true,
-        currentRoute = currentRoute,
-        onNavigate = onNavigate
-    ) {
-        item { GalaText(texto = "Agenda provisional") }
-    }
+    OwnerAgendaRoot(
+        currentRoute =currentRoute,
+        onNavigate=onNavigate
+    )
 }
 

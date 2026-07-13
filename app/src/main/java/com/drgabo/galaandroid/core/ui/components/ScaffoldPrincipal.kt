@@ -11,8 +11,11 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
-
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
@@ -22,6 +25,7 @@ import com.drgabo.galaandroid.navigation.AppDestinations
 import com.drgabo.galaandroid.core.ui.theme.GalaAndroidTheme
 import com.drgabo.galaandroid.core.ui.theme.TextoSecundario
 import com.drgabo.galaandroid.core.ui.theme.Typography
+import com.drgabo.galaandroid.core.util.SnackBarManager
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -36,18 +40,33 @@ fun ScaffoldPrincipal(
     esPantallaClientes: Boolean = false,
 
     currentRoute: String?,
-    onNavigate: (String)->Unit,
+    onNavigate: (String) -> Unit,
     content: LazyListScope.() -> Unit,
 
     ) {
 
     val spacing = if (esPantallaClientes) 0.dp else 16.dp
-    //var presses by remember { mutableIntStateOf(0) }
+    //var presses by mutableIntStateOf(0)
+
+
+    //Crear el host del snackbar porque este componente envuelve todas las pantallas, por lo que es un punto central a considerar
+    //el hostState es el que administra el snackbar visual
+    val snackbarHostState = remember { SnackbarHostState() }
+
+    LaunchedEffect(Unit) {
+        SnackBarManager.messages.collect { message ->
+            snackbarHostState.showSnackbar(message)
+
+        }
+    }
     GalaAndroidTheme {
         Scaffold(
             modifier = Modifier.fillMaxSize(),
             containerColor = Color.White,
-
+            //pasar el estado del snackbar a este scaffold
+            snackbarHost = {
+                SnackbarHost(hostState = snackbarHostState)
+            },
 
             topBar = {
                 Column(
@@ -79,7 +98,7 @@ fun ScaffoldPrincipal(
             },
             bottomBar = {
                 NavBar(
-                    currentRoute =currentRoute,
+                    currentRoute = currentRoute,
                     onNavigate = onNavigate
                 )
             },
@@ -95,7 +114,9 @@ fun ScaffoldPrincipal(
                 verticalArrangement = Arrangement.spacedBy(
                     space = spacing,
                 ),
-            ) { content()
+            ) {
+
+                content()
             }
         }
     }

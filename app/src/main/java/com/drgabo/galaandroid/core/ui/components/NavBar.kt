@@ -37,7 +37,7 @@ enum class Destination(
     val icon: ImageVector,
     val contentDescription: String
 ) {
-    HOME(AppDestinations.OWNER_DASHBOARD, "Inicio", home, "Inicio"),
+    HOME(AppDestinations.OWNER_AGENDA, "Inicio", home, "Inicio"),
     AGENDA(AppDestinations.OWNER_AGENDA, "Agenda", view_agenda, "Agenda"),
 
     SERVICES(AppDestinations.OWNER_SERVICES, "Servicios", content_cut, "Servicios"),

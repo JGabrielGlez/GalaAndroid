@@ -2,7 +2,7 @@ package com.drgabo.galaandroid.feature.appointments.presentation.agenda.showAgen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.compose.viewModel
+import com.drgabo.galaandroid.core.util.SnackBarManager
 import com.drgabo.galaandroid.feature.appointments.domain.models.Appointment
 import com.drgabo.galaandroid.feature.appointments.domain.repositories.AppointmentRepository
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -59,6 +59,12 @@ class OwnerAgendaViewModel(
 
     //una vez que ya se tienen definidos los estados modificables y el observable, lo que sigue es empezar a cargar los datos que ya se tienen hechos
 
+    fun showSnackbarMessage(message:String){
+        viewModelScope.launch {
+            SnackBarManager.showMessage(message)
+        }
+    }
+
     //La función de carga debe usar 3 estapas, que son comenzar la carga, pedir los datos y publicar el resultado
     fun loadAppointments() {
         viewModelScope.launch {
@@ -77,8 +83,9 @@ class OwnerAgendaViewModel(
 
                 _uiState.update { currentState ->
                     currentState.copy(
-                        appointmentsList = appointments,
+                        appointments = appointments,
                         isLoading = false,
+                        hasLoadedOnce = true,
                         //nota: siempre se debe de setear a null aunque se sepa que la opearción salió correcta, porque no se sabe si alguna otra funció haya dejado el mensaje de error persistido
                         errorMessage = null
                     )
@@ -90,13 +97,19 @@ class OwnerAgendaViewModel(
                 _uiState.update { currenState ->
                     currenState.copy(
                         isLoading = false,
+                        hasLoadedOnce = true,
                         errorMessage = "Hubo un error al cargar los datos, intente más tarde"
                     )
                 }
+                //como está en el catch y siempre se settea el mensaje de error, es imposible que el errorMessage sea nulo, por eso se le agregan los !!, para decir que es imposible este valor.
+                showSnackbarMessage(uiState.value.errorMessage!!)
+
             }
 
         }
     }
+
+
 
 
     //dejar de mostrar un error, es decir, después de notificarlo al usuario
@@ -114,18 +127,46 @@ class OwnerAgendaViewModel(
 
     }
 
-    //evento de tocar la card de detalle de cita
-    //se supone que la lista estará actualizada cuando se presione, ya que los datos que obtiene son los locales de la primera consulta y se refrescarán más delante mediante un polling constante
-    //todo implementar el polling en las citas
-    fun onAppointmentSelected(){
-
+    // La pantalla ya posee el objeto de la lista que dibujó; antes se buscaba otra vez por ID.
+    // Recibirlo completo evita una consulta redundante y no requiere carga ni corrutina.
+    fun onAppointmentSelected(appointment: Appointment) {
+        _uiState.update { currentState ->
+            currentState.copy(
+                selectedAppointment = appointment
+            )
+        }
     }
 
     //evento de cerrar la card de detalle cita
+    fun onAppointmentUnselected() {
+        //solo va a quitar lo que es el appointment seleccionado
+        _uiState.update {
+            currentState->
+            currentState.copy(
+                selectedAppointment = null
+            )
+        }
+    }
 
-    //evento de tocar el FAB
+    // Antes abrir/cerrar se modelaba con derivadas duplicadas en UiState.
+    // Ahora son eventos y el UiState conserva una sola fuente de verdad.
+    fun onCreateAppointmentRequested() {
+        _uiState.update { currentState ->
+            currentState.copy(
+                isCreateAppointmentSheetVisible = true
+            )
+        }
 
-    //evento de
+
+    }
+
+    fun onCreateAppointmentDismissed() {
+        _uiState.update { currentState ->
+            currentState.copy(
+                isCreateAppointmentSheetVisible = false
+            )
+        }
+    }
 
 
 }

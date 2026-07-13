@@ -16,6 +16,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.drgabo.galaandroid.core.ui.components.AppoinmentDetailCard
 import com.drgabo.galaandroid.core.ui.components.GalaText
@@ -26,6 +27,8 @@ import com.drgabo.galaandroid.core.ui.theme.EstadoConfirmada
 import com.drgabo.galaandroid.core.ui.theme.EstadoConfirmadaFondo
 import com.drgabo.galaandroid.core.ui.theme.MonstserratFamily
 import com.drgabo.galaandroid.core.ui.theme.Typography
+import com.drgabo.galaandroid.navigation.AppDestinations
+import com.drgabo.galaandroid.navigation.AppHost
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -119,11 +122,14 @@ fun OwnerDashboard(
         }
     }
 }
-/*
+
 @Preview
 @Composable
 fun MostrarAgenda() {
-    OwnerDashboard(nombrePantalla = "Gabriel")
+    OwnerDashboard(
+        currentRoute = AppDestinations.OWNER_AGENDA,
+        onNavigate = {},
+        nombrePantalla = "Gabriel")
 
 }
-*/
+

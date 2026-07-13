@@ -11,36 +11,52 @@ import com.drgabo.galaandroid.feature.appointments.domain.models.Appointment
 //en este caso son necesarias las citas, estados con citas, vacío, y el de error y loading
 //UiState debe guardar solo lo que la UI necesita para renderizarse.
 data class OwnerAgendaUiState(
-    val appointmentsList: List<Appointment> = emptyList(),//por defecto lista vaca
+    // Antes se llamaba appointmentsList; el tipo List ya expresa que se trata de una lista.
+    val appointments: List<Appointment> = emptyList(),
     val isLoading: Boolean = false,
+    // Distingue entre "aún no se ha consultado" y "la API respondió sin citas".
+    val hasLoadedOnce: Boolean = false,
     val errorMessage: String? = null,
+    val selectedAppointment: Appointment? = null,
+    // Antes se llamaba showCreateNewAppointment; ahora describe una condición visible.
+    val isCreateAppointmentSheetVisible: Boolean = false
+) {
+    // Antes, hasData era genérico; ahora el nombre indica qué datos se comprueban.
+    val hasAppointments: Boolean
+        get() = appointments.isNotEmpty()
 
-    val selectedAppointment: Appointment? = null
-){
-    //mostrar la pantalla vacía cuando...
+    // Antes no se distinguía la carga inicial de una actualización con datos existentes.
+    val showFullScreenLoading: Boolean
+        get() = isLoading && !hasAppointments
+
+    val showRefreshing: Boolean
+        get() = isLoading && hasAppointments
+
+    // hasLoadedOnce evita mostrar el estado vacío antes de consultar la API por primera vez.
     val showEmptyState: Boolean
-        get() =
-            errorMessage ==null && appointmentsList.isEmpty() && !isLoading
+        get() = hasLoadedOnce &&
+            !isLoading &&
+            errorMessage == null &&
+            !hasAppointments
 
-    //mostrar estado de error completo
-    val showFullScreenErrorState : Boolean
-        get()=
-            errorMessage!=null && !hasData
+    // Antes terminaba en State, una palabra redundante dentro de una clase UiState.
+    val showFullScreenError: Boolean
+        get() = hasLoadedOnce &&
+            !isLoading &&
+            errorMessage != null &&
+            !hasAppointments
 
-    //Este estado se puede usar cuando ya hay citas cargadas, pero ocurrió algún tipo de error
-    //Esto ayuda a distinguir entre cuando se puede mostrar un error como toast o si debe de mostrarse
-    //como
-    val showNormalError: Boolean
-        get()=
-            errorMessage!=null && hasData
-    //mostrar pantalla con contenido
+    // Antes, showNormalError no explicaba su representación; este error conserva el contenido.
+    val showErrorSnackbar: Boolean
+        get() = errorMessage != null && hasAppointments
+
+    // Antes dependía de !isLoading y ocultaba la lista durante el polling o una recarga.
     val showContent: Boolean
-        get()=
-            hasData && !isLoading
+        get() = hasAppointments
 
-    //mostrar pantalla cuando hay datos
-    val hasData: Boolean
-        get()=
-            appointmentsList.isNotEmpty()
+    // Se eliminaron showAppointment/hideAppointment: que selectedAppointment sea nulo o no
+    // ya es la única fuente de verdad para mostrar u ocultar el detalle.
+    // También se eliminaron showCreateAppointmentSheet/closeCreateAppointmentSheet:
+    // duplicaban el booleano base y "close" describe un evento, no un estado.
 
 }
