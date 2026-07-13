@@ -3,6 +3,7 @@ package com.drgabo.galaandroid.core.ui.components
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.CircularProgressIndicator
@@ -28,12 +29,12 @@ fun FullScreenModal(
     modifier:Modifier= Modifier
 ){
     Column (
-        modifier = modifier.background(AcentoFondo),
+        modifier = modifier.background(Color.Transparent).fillMaxSize(),
         verticalArrangement= Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         CircularProgressIndicator(
-            modifier = modifier.width(64.dp),
+            modifier = Modifier.width(64.dp),
             color = AcentoPrincipal,
             trackColor = AcentoSuave
         )

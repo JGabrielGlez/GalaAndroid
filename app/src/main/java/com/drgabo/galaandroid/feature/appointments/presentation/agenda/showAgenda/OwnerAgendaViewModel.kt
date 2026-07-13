@@ -78,12 +78,12 @@ class OwnerAgendaViewModel(
 
             //Ahora sigue traer los datos
             try {
-                val appointments = appointmentRepository.getAppointments()
+                val agendaDays = appointmentRepository.getAgendaDays()
                 //publicar le resultado de lo obtenido, que tiene que volver a dictar que ya no se está cargando, es decir, que la operación ya terminó
 
                 _uiState.update { currentState ->
                     currentState.copy(
-                        appointments = appointments,
+                        agendaDays = agendaDays,
                         isLoading = false,
                         hasLoadedOnce = true,
                         //nota: siempre se debe de setear a null aunque se sepa que la opearción salió correcta, porque no se sabe si alguna otra funció haya dejado el mensaje de error persistido

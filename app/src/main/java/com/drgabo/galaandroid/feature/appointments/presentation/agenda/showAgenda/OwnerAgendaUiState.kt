@@ -5,6 +5,7 @@ package com.drgabo.galaandroid.feature.appointments.presentation.agenda.showAgen
 //ya se delegaron a los otros archivos como lo son las capas de data y domain
 //este solo se preocupa por los estados que puede tener esta pantalla, y está relacionada con los appointments
 import com.drgabo.galaandroid.feature.appointments.domain.models.Appointment
+import com.drgabo.galaandroid.feature.appointments.domain.models.OwnerAgendaDay
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.Locale
@@ -15,7 +16,7 @@ import java.util.Locale
 //UiState debe guardar solo lo que la UI necesita para renderizarse.
 data class OwnerAgendaUiState(
     // Antes se llamaba appointmentsList; el tipo List ya expresa que se trata de una lista.
-    val appointments: List<Appointment> = emptyList(),
+    val agendaDays:List<OwnerAgendaDay> = emptyList(),
     val isLoading: Boolean = false,
     // Distingue entre "aún no se ha consultado" y "la API respondió sin citas".
     val hasLoadedOnce: Boolean = false,
@@ -26,6 +27,8 @@ data class OwnerAgendaUiState(
     //mostrar fecha actual
     val currentDate: LocalDate = LocalDate.now()
 ) {
+
+
     val showFormattedCurrentDay: String
         get() =
             currentDate.format(
@@ -36,11 +39,9 @@ data class OwnerAgendaUiState(
             ).replaceFirstChar { it.uppercase() }
 
 
-    //Retornar la lista de appintments agrupadas
-    val groupedAppointments:Lis
     // Antes, hasData era genérico; ahora el nombre indica qué datos se comprueban.
     val hasAppointments: Boolean
-        get() = appointments.isNotEmpty()
+        get() = agendaDays.isNotEmpty()
 
     // Antes no se distinguía la carga inicial de una actualización con datos existentes.
     val showFullScreenLoading: Boolean

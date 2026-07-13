@@ -9,7 +9,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-
+import com.drgabo.galaandroid.core.util.*
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonColors
@@ -73,15 +73,7 @@ fun OwnerAgendaScreen(
         onNavigate = onNavigate
     ) {
         //Esto siempre se muestra, aunque tengo que adaptar el summaryCardsRow para traer datos desde lo que es la api para el resumen
-        item { SummaryCardsRow() }
-        item {
-            GalaText(
-                texto = uiState.showFormattedCurrentDay,
-                estilo = Typography.bodyLarge,
-                peso = FontWeight.Bold,
-                modifier = Modifier.padding(vertical = 12.dp)
-            )
-        }
+
         // Evaluar primero los estados bloqueantes, porque impiden mostrar el contenido normal de la pantalla. Aquellos estados que son mutuamente excluyentes, es decir, no pueden existir dos al mismo tiempo, solo uno debe de mostrarse
         when {
             uiState.showEmptyState -> {
@@ -92,23 +84,23 @@ fun OwnerAgendaScreen(
                         horizontalAlignment = Alignment.CenterHorizontally,
                         verticalArrangement = Arrangement.spacedBy(32.dp),
 
-                    ) {
+                        ) {
                         Box(
                             modifier = Modifier.size(128.dp),
                             contentAlignment = Alignment.Center
-                        ){
+                        ) {
                             Icon(
-                                painter= painterResource(R.drawable.calendar),
+                                painter = painterResource(R.drawable.calendar),
                                 contentDescription = "Calendario",
                                 modifier = Modifier.fillMaxSize(),
                                 tint = TextoSecundario
                             )
                         }
                         GalaText(
-                            texto=
+                            texto =
                                 "Por el momento no hay citas para el día de hoy, agenda una.",
                             textoCentrado = true,
-                            peso= FontWeight.SemiBold,
+                            peso = FontWeight.SemiBold,
                             modifier = Modifier.fillMaxWidth(.7f)
 
                         )
@@ -128,7 +120,9 @@ fun OwnerAgendaScreen(
             uiState.showFullScreenLoading -> {
                 //mostrar que toda la pantalla está cargando
                 item {
-                    FullScreenModal("Cargando las citas del día.")
+                    FullScreenModal(message="Cargando las citas del día.",
+                        modifier = Modifier.fillParentMaxSize()
+                    )
                 }
             }
 
@@ -140,33 +134,43 @@ fun OwnerAgendaScreen(
             }
 
             uiState.showContent -> {
-                //Esto mostrará lo que es la pantalla principal, la pantalla "correcta"
-                items(uiState.appointments) { appointment ->
-                    val services = appointment.serviceSummary
-                    val size = services.size
-                    var serviceCardName = services[0].nombre
-                    if (size > 1) serviceCardName = "$serviceCardName..."
-
-                    AppoinmentDetailCard(
-                        nombreCliente = appointment.client.nombre,
-                        //todo solo muestro el primer servicio
-                        servicio = serviceCardName,
-                        duracion = services.sumOf { service ->
-                            service.duracionMin
-                        }.toString(),
-                        horaInicio = appointment.scheduledStart,
-                        mensajeBagde = appointment.appointmentStatus.toDisplayText(),
-                        colorBagde = appointment.appointmentStatus.toBadgeColorBg(),
-                        colorTextoBagde = appointment.appointmentStatus.toBadgeColorText(),
-                        //iconButtonIcon = TODO(),
-                        //iconOnClick = TODO(),
-                        //modifier = TODO()
-                    )
+               // item { SummaryCardsRow() }
+                uiState.agendaDays.forEach { day ->
+                    //Este es el separador que me dice de qué día es la cita
+                    item {
+                        GalaText(
+                            texto = day.label.replaceFirstChar { it.uppercase() },
+                            estilo = Typography.bodyLarge,
+                            peso = FontWeight.Bold,
+                            modifier = Modifier.padding(vertical = 12.dp)
+                        )
+                    }
+                    items(day.appointments){appointment->
+                        val services = appointment.serviceSummary
+                        val serviceName = services[0].nombre
+                        val serviceCardName = if(services.size==1) serviceName else
+                            "$serviceName..."
+                        AppoinmentDetailCard(
+                            nombreCliente = appointment.client.nombre,
+                            servicio = serviceCardName,
+                            duracion = services.sumOf { it.duracionMin }.toString()+" min.",
+                            horaInicio = formatScheduledStartHour(appointment.scheduledStart),
+                            mensajeBagde = appointment.appointmentStatus.toDisplayText(),
+                            colorBagde = appointment.appointmentStatus.toBadgeColorBg(),
+                            colorTextoBagde = appointment.appointmentStatus.toBadgeColorText(),
+                            modifier = Modifier.fillMaxWidth()
+                            //iconButtonIcon = TODO(),
+                            //iconOnClick = TODO(),
+                            //modifier = TODO()
+                        )
+                    }
                 }
             }
 
         }
     }
+
+
 
 
     // Si está cargando por primera vez, se debe mostrar la carga completa y no la lista.
@@ -196,7 +200,7 @@ fun EmptyState() {
             currentRoute = AppDestinations.OWNER_AGENDA,
             onNavigate = {},
             uiState = OwnerAgendaUiState(
-                appointments = emptyList(),
+                agendaDays = emptyList(),
                 isLoading = false,
                 errorMessage = null,
                 hasLoadedOnce = true
@@ -209,74 +213,74 @@ fun EmptyState() {
         )
     }
 }
-//
-//@Preview
-//@Composable
-//fun FullScreenLoading() {
-//
-//    GalaAndroidTheme {
-//        OwnerAgendaScreen(
-//            currentRoute = AppDestinations.OWNER_AGENDA,
-//            onNavigate = {},
-//            uiState = OwnerAgendaUiState(
-//                isLoading = true,
-//                appointments = emptyList()
-//            ),
-//            onErrorConsumed = {},
-//            onAppointmentUnselected = {},
-//            onCreateAppointmentRequested = {},
-//            onCreateAppointmentDismissed = {},
-//            onAppointmentSelected = {}
-//        )
-//    }
-//}
-//
-//@Preview
-//@Composable
-//fun FullScreenError() {
-//
-//    GalaAndroidTheme {
-//        OwnerAgendaScreen(
-//            currentRoute = AppDestinations.OWNER_AGENDA,
-//            onNavigate = {},
-//            uiState = OwnerAgendaUiState(
-//                hasLoadedOnce = true,
-//                isLoading = false,
-//                errorMessage = "Hubo un error",
-//                appointments = emptyList()
-//            ),
-//            onErrorConsumed = {},
-//            onAppointmentUnselected = {},
-//            onCreateAppointmentRequested = {},
-//            onCreateAppointmentDismissed = {},
-//            onAppointmentSelected = {}
-//        )
-//    }
-//}
-//
-//
-//@Preview
-//@Composable
-//fun NormalState() {
-//
-//    val repo = kotlinx.coroutines.runBlocking {
-//        FakeAppointmenRepository().getAppointments()
-//
-//    }
-//    GalaAndroidTheme {
-//        OwnerAgendaScreen(
-//            currentRoute = AppDestinations.OWNER_AGENDA,
-//            onNavigate = {},
-//            uiState = OwnerAgendaUiState(
-//                appointments = repo
-//            ),
-//            onErrorConsumed = {},
-//            onAppointmentUnselected = {},
-//            onCreateAppointmentRequested = {},
-//            onCreateAppointmentDismissed = {},
-//            onAppointmentSelected = {}
-//        )
-//    }
-//}
+
+@Preview
+@Composable
+fun FullScreenLoading() {
+
+    GalaAndroidTheme {
+        OwnerAgendaScreen(
+            currentRoute = AppDestinations.OWNER_AGENDA,
+            onNavigate = {},
+            uiState = OwnerAgendaUiState(
+                isLoading = true,
+                agendaDays = emptyList()
+            ),
+            onErrorConsumed = {},
+            onAppointmentUnselected = {},
+            onCreateAppointmentRequested = {},
+            onCreateAppointmentDismissed = {},
+            onAppointmentSelected = {}
+        )
+    }
+}
+
+@Preview
+@Composable
+fun FullScreenError() {
+
+    GalaAndroidTheme {
+        OwnerAgendaScreen(
+            currentRoute = AppDestinations.OWNER_AGENDA,
+            onNavigate = {},
+            uiState = OwnerAgendaUiState(
+                hasLoadedOnce = true,
+                isLoading = false,
+                errorMessage = "Hubo un error",
+                agendaDays = emptyList()
+            ),
+            onErrorConsumed = {},
+            onAppointmentUnselected = {},
+            onCreateAppointmentRequested = {},
+            onCreateAppointmentDismissed = {},
+            onAppointmentSelected = {}
+        )
+    }
+}
+
+
+@Preview
+@Composable
+fun NormalState() {
+
+    val repo = kotlinx.coroutines.runBlocking {
+        FakeAppointmenRepository().getAgendaDays()
+
+    }
+    GalaAndroidTheme {
+        OwnerAgendaScreen(
+            currentRoute = AppDestinations.OWNER_AGENDA,
+            onNavigate = {},
+            uiState = OwnerAgendaUiState(
+                agendaDays = repo
+            ),
+            onErrorConsumed = {},
+            onAppointmentUnselected = {},
+            onCreateAppointmentRequested = {},
+            onCreateAppointmentDismissed = {},
+            onAppointmentSelected = {}
+        )
+    }
+}
 
 

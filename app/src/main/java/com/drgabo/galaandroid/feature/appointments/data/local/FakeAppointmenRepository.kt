@@ -17,7 +17,7 @@ class FakeAppointmenRepository : AppointmentRepository {
     override suspend fun getAgendaDays(): List<OwnerAgendaDay> {
         return appointmentsDemo
             .groupBy { appointment ->
-                appointment.scheduledStart.substringBefore(" ")
+                appointment.scheduledStart.substringBefore("T")
             }
             .toSortedMap()
             .map { (date, appointments) ->
@@ -52,8 +52,8 @@ class FakeAppointmenRepository : AppointmentRepository {
 private val appointmentsDemo = listOf(
     Appointment(
         id = "appt_001",
-        scheduledStart = "2026-07-14 09:00",
-        scheduledEnd = "2026-07-14 10:00",
+        scheduledStart = "2026-07-14T09:00:00-07:00",
+        scheduledEnd = "2026-07-14T10:00:00-07:00",
         appointmentStatus = AppointmentStatus.CONFIRMED,
         paymentStatus = PaymentStatus.PAID,
         amountPaid = 350,
@@ -70,8 +70,8 @@ private val appointmentsDemo = listOf(
     ),
     Appointment(
         id = "appt_002",
-        scheduledStart = "2026-07-14 11:00",
-        scheduledEnd = "2026-07-14 12:30",
+        scheduledStart = "2026-07-14T11:00:00-07:00",
+        scheduledEnd = "2026-07-14T12:30:00-07:00",
         appointmentStatus = AppointmentStatus.PENDING,
         paymentStatus = PaymentStatus.UNPAID,
         amountPaid = 0,
@@ -88,8 +88,8 @@ private val appointmentsDemo = listOf(
     ),
     Appointment(
         id = "appt_003",
-        scheduledStart = "2026-07-14 17:00",
-        scheduledEnd = "2026-07-14 18:00",
+        scheduledStart = "2026-07-14T17:00:00-07:00",
+        scheduledEnd = "2026-07-14T18:00:00-07:00",
         appointmentStatus = AppointmentStatus.COMPLETED,
         paymentStatus = PaymentStatus.PAID,
         amountPaid = 300,
@@ -106,8 +106,8 @@ private val appointmentsDemo = listOf(
     ),
     Appointment(
         id = "appt_004",
-        scheduledStart = "2026-07-15 09:30",
-        scheduledEnd = "2026-07-15 11:00",
+        scheduledStart = "2026-07-15T09:30:00-07:00",
+        scheduledEnd = "2026-07-15T11:00:00-07:00",
         appointmentStatus = AppointmentStatus.CONFIRMED,
         paymentStatus = PaymentStatus.PARTIALLY_PAID,
         amountPaid = 200,
@@ -124,8 +124,8 @@ private val appointmentsDemo = listOf(
     ),
     Appointment(
         id = "appt_005",
-        scheduledStart = "2026-07-15 12:00",
-        scheduledEnd = "2026-07-15 13:00",
+        scheduledStart = "2026-07-15T12:00:00-07:00",
+        scheduledEnd = "2026-07-15T13:00:00-07:00",
         appointmentStatus = AppointmentStatus.CANCELLED,
         paymentStatus = PaymentStatus.REFUNDED,
         amountPaid = 400,
@@ -142,8 +142,8 @@ private val appointmentsDemo = listOf(
     ),
     Appointment(
         id = "appt_006",
-        scheduledStart = "2026-07-15 18:00",
-        scheduledEnd = "2026-07-15 19:30",
+        scheduledStart = "2026-07-15T18:00:00-07:00",
+        scheduledEnd = "2026-07-15T19:30:00-07:00",
         appointmentStatus = AppointmentStatus.CONFIRMED,
         paymentStatus = PaymentStatus.PAID,
         amountPaid = 550,
@@ -160,8 +160,8 @@ private val appointmentsDemo = listOf(
     ),
     Appointment(
         id = "appt_007",
-        scheduledStart = "2026-07-16 08:30",
-        scheduledEnd = "2026-07-16 09:30",
+        scheduledStart = "2026-07-16T08:30:00-07:00",
+        scheduledEnd = "2026-07-16T09:30:00-07:00",
         appointmentStatus = AppointmentStatus.NO_SHOW,
         paymentStatus = PaymentStatus.EXPIRED,
         amountPaid = 0,
@@ -178,8 +178,8 @@ private val appointmentsDemo = listOf(
     ),
     Appointment(
         id = "appt_008",
-        scheduledStart = "2026-07-16 10:00",
-        scheduledEnd = "2026-07-16 11:00",
+        scheduledStart = "2026-07-16T10:00:00-07:00",
+        scheduledEnd = "2026-07-16T11:00:00-07:00",
         appointmentStatus = AppointmentStatus.CONFIRMED,
         paymentStatus = PaymentStatus.PAID,
         amountPaid = 280,
@@ -196,8 +196,8 @@ private val appointmentsDemo = listOf(
     ),
     Appointment(
         id = "appt_009",
-        scheduledStart = "2026-07-16 13:00",
-        scheduledEnd = "2026-07-16 14:30",
+        scheduledStart = "2026-07-16T13:00:00-07:00",
+        scheduledEnd = "2026-07-16T14:30:00-07:00",
         appointmentStatus = AppointmentStatus.PENDING,
         paymentStatus = PaymentStatus.FAILED,
         amountPaid = 0,
@@ -214,8 +214,8 @@ private val appointmentsDemo = listOf(
     ),
     Appointment(
         id = "appt_010",
-        scheduledStart = "2026-07-16 17:00",
-        scheduledEnd = "2026-07-16 18:30",
+        scheduledStart = "2026-07-16T17:00:00-07:00",
+        scheduledEnd = "2026-07-16T18:30:00-07:00",
         appointmentStatus = AppointmentStatus.CONFIRMED,
         paymentStatus = PaymentStatus.PAID,
         amountPaid = 700,

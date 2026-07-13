@@ -8,7 +8,6 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.drgabo.galaandroid.feature.appointments.presentation.agenda.showAgenda.OwnerAgenda
 import com.drgabo.galaandroid.feature.clients.presentation.showClients.OwnerClients
-import com.drgabo.galaandroid.feature.appointments.presentation.summary.showSummary.OwnerDashboard
 import com.drgabo.galaandroid.core.ui.components.GalaText
 import com.drgabo.galaandroid.core.ui.components.ScaffoldPrincipal
 //sirve para decidir qué pantalla mostrar, cuál es la pantalla inicial y qué rutas existen dentro de la app
