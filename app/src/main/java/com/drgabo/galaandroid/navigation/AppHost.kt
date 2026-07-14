@@ -62,14 +62,7 @@ fun AppHost(){
         }
 
 
-        //Agenda - Inicio
-        composable (route= AppDestinations.OWNER_AGENDA){
-            //OwnerAgenda(), ESTA AÚN NO ESTÁ
-            OwnerAgenda(
-                currentRoute = currentRoute,
-                onNavigate = onNavigate
-            )
-        }
+
 
         composable(route = AppDestinations.OWNER_SERVICES) {
             PlaceholderMainScreen(

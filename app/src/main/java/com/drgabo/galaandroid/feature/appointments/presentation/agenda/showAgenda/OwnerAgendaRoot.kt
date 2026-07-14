@@ -7,16 +7,32 @@ import androidx.compose.runtime.remember
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.drgabo.galaandroid.feature.appointments.data.local.FakeAppointmenRepository
+import com.drgabo.galaandroid.feature.appointments.data.remote.AppointmentsApiFactory
+import com.drgabo.galaandroid.feature.appointments.data.remote.RemoteAppointmentRepository
+import com.drgabo.galaandroid.feature.auth.data.remote.AuthApi
+import com.drgabo.galaandroid.feature.auth.data.remote.AuthApiFactory
+import com.drgabo.galaandroid.feature.auth.data.remote.RemoteAuthRepository
 
 @Composable
 fun OwnerAgendaRoot(
     //recibir navegacipon
     currentRoute: String?,
     onNavigate: (String) -> Unit
-){
-    //Crear el repository a usar
-    val repository = remember{
-        FakeAppointmenRepository()
+) {
+
+    //El remember hace que en cada recomposición no se creen nuevas instancias, sino que se returilicen tal cual estaban
+    val appointmentsApi = remember { AppointmentsApiFactory.create() }
+    val authApi = remember { AuthApiFactory.create() }
+    val authRepository = remember(authApi) {
+        RemoteAuthRepository(
+            authApi = authApi
+        )
+    }
+    val repository = remember(authRepository, appointmentsApi) {
+        RemoteAppointmentRepository(
+            api = appointmentsApi,
+            authRepository = authRepository
+        )
     }
 
     //Crear la factory para el VM
@@ -25,8 +41,8 @@ fun OwnerAgendaRoot(
     }
 
     //Ya se tiene la factory que creó el VM, ahora solo falta pedirlo para poder usarlos
-    val viewModel: OwnerAgendaViewModel= viewModel(
-        factory=factory
+    val viewModel: OwnerAgendaViewModel = viewModel(
+        factory = factory
     )
 
     //Observar el UiState
@@ -49,7 +65,7 @@ fun OwnerAgendaRoot(
         onAppointmentUnselected = viewModel::onAppointmentUnselected,
         onCreateAppointmentRequested = viewModel::onCreateAppointmentRequested,
         onCreateAppointmentDismissed = viewModel::onCreateAppointmentDismissed,
-       // loadAppointments = viewModel::loadAppointments
+        // loadAppointments = viewModel::loadAppointments
     )
 
 
