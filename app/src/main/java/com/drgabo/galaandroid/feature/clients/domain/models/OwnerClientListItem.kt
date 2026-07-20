@@ -7,8 +7,7 @@ data class OwnerClientListItem(
     val id: String,
     val nombre: String,
     val telefono: String,
-    val email: String? = null
-    ,
+    val email: String? = null,
     val cancelaciones:Int,
     val primeraVisitaAt:String,
     val ultimaVisitaAt:String,
