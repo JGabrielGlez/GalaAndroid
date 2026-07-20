@@ -1,5 +1,8 @@
 package com.drgabo.galaandroid.feature.appointments.domain.models
 
+import com.drgabo.galaandroid.data.domain.models.AppointmentStatus
+import com.drgabo.galaandroid.data.domain.models.PaymentStatus
+
 
 data class Appointment(
     val id: String,

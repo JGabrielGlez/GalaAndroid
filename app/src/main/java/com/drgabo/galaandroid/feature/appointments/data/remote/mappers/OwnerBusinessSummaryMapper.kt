@@ -1,7 +1,7 @@
 package com.drgabo.galaandroid.feature.appointments.data.remote.mappers
 
-import com.drgabo.galaandroid.feature.appointments.data.remote.dto.OwnerBusinessSummaryDto
-import com.drgabo.galaandroid.feature.appointments.domain.models.OwnerBusinessSummary
+import com.drgabo.galaandroid.data.dto.OwnerBusinessSummaryDto
+import com.drgabo.galaandroid.data.domain.models.OwnerBusinessSummary
 
 fun OwnerBusinessSummaryDto.toDomain(): OwnerBusinessSummary {
     return OwnerBusinessSummary(

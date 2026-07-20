@@ -1,6 +1,6 @@
 package com.drgabo.galaandroid.feature.appointments.data.remote.mappers
 
-import com.drgabo.galaandroid.feature.appointments.data.remote.dto.CommercialStatusDto
+import com.drgabo.galaandroid.data.enums.CommercialStatusDto
 import com.drgabo.galaandroid.feature.appointments.domain.models.CommercialStatus
 
 fun CommercialStatusDto.toDomain(): CommercialStatus {

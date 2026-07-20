@@ -15,7 +15,7 @@ import com.drgabo.galaandroid.feature.auth.data.remote.RemoteAuthRepository
 
 @Composable
 fun OwnerAgendaRoot(
-    //recibir navegacipon
+    //recibir navegación
     currentRoute: String?,
     onNavigate: (String) -> Unit
 ) {

@@ -1,6 +1,8 @@
 package com.drgabo.galaandroid.feature.appointments.data.remote.dto
 
-import com.drgabo.galaandroid.feature.clients.data.remote.dto.ClientDto
+import com.drgabo.galaandroid.data.enums.CommercialStatusDto
+import com.drgabo.galaandroid.data.enums.AppointmentStatusDto
+import com.drgabo.galaandroid.data.enums.PaymentStatusDto
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 

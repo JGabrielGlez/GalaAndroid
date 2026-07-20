@@ -1,7 +1,7 @@
 package com.drgabo.galaandroid.feature.appointments.presentation.agenda.showAgenda
 
 import androidx.compose.ui.graphics.Color
-import com.drgabo.galaandroid.feature.appointments.domain.models.AppointmentStatus
+import com.drgabo.galaandroid.data.domain.models.AppointmentStatus
 import com.drgabo.galaandroid.core.ui.theme.*
 
 fun AppointmentStatus.toDisplayText(): String {

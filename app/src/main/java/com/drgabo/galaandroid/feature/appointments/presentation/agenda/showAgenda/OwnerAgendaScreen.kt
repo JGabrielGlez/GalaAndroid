@@ -128,8 +128,27 @@ fun OwnerAgendaScreen(
 
             uiState.showFullScreenError -> {
                 item {
-
-                    GalaText("Mostrando erro de toda la pantalla")
+                    Column(
+                        modifier = Modifier
+                            .fillParentMaxSize()
+                            .padding(horizontal = 24.dp),
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.Center
+                    ) {
+                        GalaText(
+                            texto = "Ocurrió un error",
+                            estilo = Typography.headlineSmall,
+                            peso = FontWeight.Bold,
+                            textoCentrado = true
+                        )
+                        GalaText(
+                            texto = "Reiniciar la aplicación",
+                            estilo = Typography.titleLarge,
+                            peso = FontWeight.SemiBold,
+                            textoCentrado = true,
+                            modifier = Modifier.padding(top = 12.dp)
+                        )
+                    }
                 }
             }
 

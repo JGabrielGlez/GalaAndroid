@@ -15,8 +15,8 @@ import com.drgabo.galaandroid.feature.auth.domain.models.OwnerLoginResponse
 import com.drgabo.galaandroid.feature.auth.domain.models.OwnerLoginSession
 import com.drgabo.galaandroid.feature.auth.domain.models.OwnerSession
 
-fun OwnerLoginRequest.toDto(): OwnerLoginRequestDto {
-    return OwnerLoginRequestDto(
+fun OwnerLoginRequestDto.toDto(): OwnerLoginRequest {
+    return OwnerLoginRequest(
         email = this.email,
         password = this.password,
         redirectTo = this.redirectTo,

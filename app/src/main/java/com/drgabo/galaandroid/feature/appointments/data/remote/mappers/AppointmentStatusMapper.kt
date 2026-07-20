@@ -1,7 +1,7 @@
 package com.drgabo.galaandroid.feature.appointments.data.remote.mappers
 
-import com.drgabo.galaandroid.feature.appointments.data.remote.dto.AppointmentStatusDto
-import com.drgabo.galaandroid.feature.appointments.domain.models.AppointmentStatus
+import com.drgabo.galaandroid.data.enums.AppointmentStatusDto
+import com.drgabo.galaandroid.data.domain.models.AppointmentStatus
 
 
 fun AppointmentStatusDto.toDomain(): AppointmentStatus{

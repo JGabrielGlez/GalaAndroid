@@ -6,8 +6,8 @@ import com.drgabo.galaandroid.feature.appointments.domain.models.AppointmentPaym
 import com.drgabo.galaandroid.feature.appointments.domain.models.AppointmentService
 import com.drgabo.galaandroid.feature.appointments.domain.models.OwnerAgendaDay
 import com.drgabo.galaandroid.feature.appointments.domain.models.AppointmentSource
-import com.drgabo.galaandroid.feature.appointments.domain.models.AppointmentStatus
-import com.drgabo.galaandroid.feature.appointments.domain.models.PaymentStatus
+import com.drgabo.galaandroid.data.domain.models.AppointmentStatus
+import com.drgabo.galaandroid.data.domain.models.PaymentStatus
 import com.drgabo.galaandroid.feature.appointments.domain.repositories.AppointmentRepository
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter

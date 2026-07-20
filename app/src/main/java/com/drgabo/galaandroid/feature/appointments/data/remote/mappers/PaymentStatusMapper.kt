@@ -1,7 +1,7 @@
 package com.drgabo.galaandroid.feature.appointments.data.remote.mappers
 
-import com.drgabo.galaandroid.feature.appointments.data.remote.dto.PaymentStatusDto
-import com.drgabo.galaandroid.feature.appointments.domain.models.PaymentStatus
+import com.drgabo.galaandroid.data.enums.PaymentStatusDto
+import com.drgabo.galaandroid.data.domain.models.PaymentStatus
 
 fun PaymentStatusDto.toDomain(): PaymentStatus{
     //el this en este caso hace referencia al objeto que lo mandó a llamar

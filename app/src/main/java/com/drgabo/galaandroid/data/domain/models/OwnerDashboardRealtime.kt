@@ -1,4 +1,4 @@
-package com.drgabo.galaandroid.feature.appointments.domain.models
+package com.drgabo.galaandroid.data.domain.models
 
 data class OwnerDashboardRealtime(
     val supported: Boolean,

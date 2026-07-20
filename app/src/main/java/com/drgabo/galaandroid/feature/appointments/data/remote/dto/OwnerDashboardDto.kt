@@ -1,6 +1,7 @@
 package com.drgabo.galaandroid.feature.appointments.data.remote.dto
 
-import com.drgabo.galaandroid.feature.clients.data.remote.dto.ClientDto
+import com.drgabo.galaandroid.data.dto.OwnerBusinessSummaryDto
+import com.drgabo.galaandroid.data.dto.OwnerDashboardRealtimeDto
 import kotlinx.serialization.Serializable
 
 @Serializable

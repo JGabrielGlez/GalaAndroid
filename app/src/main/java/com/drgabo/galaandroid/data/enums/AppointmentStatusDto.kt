@@ -1,4 +1,4 @@
-package com.drgabo.galaandroid.feature.appointments.data.remote.dto
+package com.drgabo.galaandroid.data.enums
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

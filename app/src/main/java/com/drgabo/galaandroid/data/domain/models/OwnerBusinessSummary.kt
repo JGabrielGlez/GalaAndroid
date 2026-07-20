@@ -1,4 +1,7 @@
-package com.drgabo.galaandroid.feature.appointments.domain.models
+package com.drgabo.galaandroid.data.domain.models
+
+import com.drgabo.galaandroid.feature.appointments.domain.models.CommercialStatus
+import com.drgabo.galaandroid.feature.appointments.domain.models.ThemeId
 
 data class OwnerBusinessSummary(
     val negocioId: String,
