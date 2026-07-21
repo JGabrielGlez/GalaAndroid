@@ -6,7 +6,9 @@ import com.drgabo.galaandroid.feature.clients.domain.usecases.GetOwnerClientsUse
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+
 
 class OwnerClientsViewModel(
     //1: Dependecias: Se reciben lo que son los use cases que la pantalla necesita
@@ -37,21 +39,41 @@ class OwnerClientsViewModel(
 
             //se solicita la informacipon mediante el use case y se envía un evento
             getClientsUseCase()
-                .onSuccess { data ->
+                .onSuccess { clients ->
                     //Ejecuta el use case, en este momento ya tiene la lista de clientes, por lo que Data representa la respuesta, si no hay información se presenta el estado de empty, si sí, el de success puro
-                    _uiState.value = if (data.isEmpty()) OwnerClientsUiState.Empty
+                    _uiState.value = if (clients.isEmpty()) OwnerClientsUiState.Empty
                     else
                         OwnerClientsUiState.Success(
-                            clients = data,
+                            clients = clients,
                             //Esto es redundante porque el uiState ya lo hace, pero lo pongo solo para entender mejor el funcionamiento
                             query = ""
                         )
                 }
                 .onFailure {
+
+                    //Recibe un dato error, que se puede reutilizar si se quiere usar su contenido, por el momento no lo usaré ya que quiero mostrar un único mensaje fijo
                     _uiState.value = OwnerClientsUiState.Error(
                         message = "No se pudieron cargar los clientes, intente más tarde."
                     )
                 }
+        }
+    }
+
+    //Me faltó agregar la otra función que define qué se debe de hacer cuando el query cambia, en el VM se definen todas las funciones que permitan renderizar la pantalla o hacer más bien que esta funcione y sea reactiva, sin esta función que pondré, el buscador no hará nada realmente
+    fun onQueryChange(query: String) {
+        //Actualiza el estado, con update se Actualizan los valores que están dentro del mutableState
+        _uiState.update { currentState ->
+            //Hay que proteger y tener en cuenta que query solo existe en success
+            //la comparación se puede hacer porque es una data class/object
+            if (currentState is OwnerClientsUiState.Success) {
+                //Se crea un nuevo estado con el texto actualizado
+                currentState.copy(
+                    query = query
+                )
+            } else {
+                //Retorna el estado actual, que son todos menos success
+                currentState
+            }
         }
     }
 }
