@@ -15,11 +15,11 @@ class FakeOwnerClientsListData: OwnerClientsRepository{
         })
     }
 
-    override suspend fun getClientById(id: String): Result<OwnerClientListItem?> {
+    override suspend fun getClientById(id: String): Result<OwnerClientListItem> {
         return Result.success(OwnerClientsList.find {
-            clientListItem ->
+                clientListItem ->
             clientListItem.id==id
-        })
+        }) as Result<OwnerClientListItem>
     }
 
 }

@@ -68,14 +68,19 @@ fun OwnerClientsScreen(
                     ClientCardDetail(
                         nombre = client.nombre,
                         ultimaVisita = client.ultimaVisitaAt,
-                        noCitas = client.appointmentsCount
+                        noCitas = client.appointmentsCount,
+                        //agregarle un método en el cual detecte el click
                     )
+                }
+                if(uiState.showAddClient){
 
-                    ModalBottomSheet(
-                        onDismissRequest = onFabClicked,
-                        scrimColor = Color.Gray.copy(alpha = .3f)
+                    item{
+                        ModalBottomSheet(
+                            onDismissRequest = onFabClicked,
+                            scrimColor = Color.Gray.copy(alpha = .3f)
                         ) {
-                        GalaText(texto="Mostrando agregar clientes")
+                            GalaText(texto="Mostrando agregar clientes")
+                        }
                     }
                 }
 

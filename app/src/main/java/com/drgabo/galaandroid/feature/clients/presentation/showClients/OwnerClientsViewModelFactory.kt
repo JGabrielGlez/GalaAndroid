@@ -9,19 +9,16 @@ class OwnerClientsViewModelFactory(
     //!. La factory recibe las dependencias que requiere el VM
     private val getClientsUseCase: GetOwnerClientsUseCase
 
-): ViewModelProvider.Factory{
+) : ViewModelProvider.Factory {
     //se sobreescribe la función de create
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         //Se comprueba que la clase solicitada sea realmente el VM esperado
-        if(modelClass.isAssignableFrom(OwnerClientsViewModel::class.java)){
-            //se construye el VM con sus respectivas dependencias
+        if (modelClass.isAssignableFrom(OwnerClientsViewModel::class.java))
+        //se construye el VM con sus respectivas dependencias
             return OwnerClientsViewModel(
                 getClientsUseCase = getClientsUseCase
             ) as T
-        }
-
         //Si la factory llega a desconocer lo que recibió, se retorna un error
-
         throw IllegalArgumentException("ViewModel Desconocido: ${modelClass.name}")
     }
 }
