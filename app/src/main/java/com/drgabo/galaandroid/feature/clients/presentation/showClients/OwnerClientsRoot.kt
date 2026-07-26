@@ -41,7 +41,8 @@ fun OwnerClientsRoot(
         onNavigate=onNavigate,
         uiState=uiState,
         //Este es el callback hacia el VM
-        onQueryChange = viewModel::onQueryChange
+        onQueryChange = viewModel::onQueryChange,
+        onFabClicked = viewModel::onAddClient
     )
 
 

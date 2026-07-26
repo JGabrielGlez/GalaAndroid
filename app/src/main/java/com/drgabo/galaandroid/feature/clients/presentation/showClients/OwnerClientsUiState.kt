@@ -14,7 +14,8 @@ sealed interface OwnerClientsUiState {
     data class Success(
         //debe poder filtrar los queries enviados, para filtrar los respectivos clientes
         val clients: List<OwnerClientListItem>,
-        val query: String = "" //Por defecto vacío, nunca nulo
+        val query: String = "", //Por defecto vacío, nunca nulo
+        val showAddClient: Boolean=false
 
     ) : OwnerClientsUiState {
         //aquí se usará la lógica de filtrado que serán estados derivados sencillos

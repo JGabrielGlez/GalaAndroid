@@ -2,6 +2,7 @@ package com.drgabo.galaandroid.feature.clients.presentation.showClients
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.drgabo.galaandroid.feature.clients.domain.models.OwnerClientListItem
 import com.drgabo.galaandroid.feature.clients.domain.usecases.GetOwnerClientsUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -76,6 +77,21 @@ class OwnerClientsViewModel(
             }
         }
     }
+
+    fun onAddClient() {
+        //Lo que debe de pasar es actualizar el estado de la uiState para que sea verdadero el mostrar el modal para agregar al cliente, mientras que se le manda lo que es el id para que traiga la respectiva información
+        _uiState.update { currentState ->
+            if (currentState is OwnerClientsUiState.Success) {
+                //Debo actualizar el estado para mostrar el modal
+                currentState.copy(
+                    //con esto hago un switch que cada que se mande a llamar, se invierta el valor
+                    showAddClient = !currentState.showAddClient
+                )
+
+            } else currentState
+        }
+    }
+
 }
 
 
