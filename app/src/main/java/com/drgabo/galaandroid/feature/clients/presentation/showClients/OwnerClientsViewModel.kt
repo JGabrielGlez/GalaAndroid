@@ -80,12 +80,29 @@ class OwnerClientsViewModel(
 
     fun onAddClient() {
         //Lo que debe de pasar es actualizar el estado de la uiState para que sea verdadero el mostrar el modal para agregar al cliente, mientras que se le manda lo que es el id para que traiga la respectiva información
+        println("onAddClient fue ejecutado")
+
         _uiState.update { currentState ->
             if (currentState is OwnerClientsUiState.Success) {
                 //Debo actualizar el estado para mostrar el modal
                 currentState.copy(
                     //con esto hago un switch que cada que se mande a llamar, se invierta el valor
-                    showAddClient = !currentState.showAddClient
+                    showAddClient = true
+                )
+
+            } else currentState
+        }
+    }
+    fun onAddClientDismissed() {
+        println("onAddClient fue ejecutado")
+
+        //Lo que debe de pasar es actualizar el estado de la uiState para que sea verdadero el mostrar el modal para agregar al cliente, mientras que se le manda lo que es el id para que traiga la respectiva información
+        _uiState.update { currentState ->
+            if (currentState is OwnerClientsUiState.Success) {
+                //Debo actualizar el estado para mostrar el modal
+                currentState.copy(
+                    //con esto hago un switch que cada que se mande a llamar, se invierta el valor
+                    showAddClient = false
                 )
 
             } else currentState

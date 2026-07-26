@@ -45,6 +45,7 @@ fun OwnerClientsRoot(
         //Este es el callback hacia el VM
         onQueryChange = viewModel::onQueryChange,
         onFabClicked = viewModel::onAddClient,
+        onAddClientDismissed=viewModel::onAddClientDismissed,
         onClientCardClicked = {
             clientId->
             onNavigate(

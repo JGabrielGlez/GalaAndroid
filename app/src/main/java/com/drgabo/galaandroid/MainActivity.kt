@@ -15,7 +15,7 @@ class MainActivity : ComponentActivity(){
             savedInstanceState
         )
         setContent{
-            _root_ide_package_.com.drgabo.galaandroid.core.ui.theme.GalaAndroidTheme {
+            GalaAndroidTheme {
                 //no abre una pantalla fija, sino el flujo de navegación completo
                 AppHost()
             }

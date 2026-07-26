@@ -38,11 +38,10 @@ fun ScaffoldPrincipal(
     searchBarQuery: String = "",
     onSearchBarOnQueryChange: (String) -> Unit = {},
     esPantallaClientes: Boolean = false,
-
     currentRoute: String?,
     onNavigate: (String) -> Unit,
+    overlayContent:@Composable (()->Unit)?=null,
     content: LazyListScope.() -> Unit,
-
     ) {
 
     val spacing = if (esPantallaClientes) 0.dp else 16.dp
@@ -119,6 +118,8 @@ fun ScaffoldPrincipal(
                 content()
             }
         }
+
+        overlayContent?.invoke()
     }
 }
 

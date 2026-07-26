@@ -1,9 +1,11 @@
 package com.drgabo.galaandroid.feature.clients.presentation.showClients
 
+import android.util.Log
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import com.drgabo.galaandroid.navigation.AppDestinations
@@ -11,6 +13,7 @@ import com.drgabo.galaandroid.core.ui.components.ClientCardDetail
 import com.drgabo.galaandroid.core.ui.components.GalaText
 import com.drgabo.galaandroid.core.ui.components.ScaffoldPrincipal
 import com.drgabo.galaandroid.feature.clients.data.local.OwnerClientsList
+import com.drgabo.galaandroid.feature.clients.presentation.showClientDetails.ShowClientDetailsUiState
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -20,9 +23,12 @@ fun OwnerClientsScreen(
     uiState: OwnerClientsUiState,
     onQueryChange: (String) -> Unit,
     onFabClicked: () -> Unit,
+    onAddClientDismissed:()-> Unit,
     onClientCardClicked: (String) -> Unit
     //tiene que recibir la función que activa o desactiva el drawer
 ) {
+
+
     //el sealed interface de success es el unico estado que contiene lo que es el query para realizar la búsqueda, por lo que es el que se tiene que obtener
     val query = (uiState as? OwnerClientsUiState.Success)?.query.orEmpty()
 
@@ -38,7 +44,17 @@ fun OwnerClientsScreen(
         esPantallaClientes = true,
         currentRoute = currentRoute,
         onNavigate = onNavigate,
+        overlayContent = {
+            if (uiState is OwnerClientsUiState.Success && uiState.showAddClient) {
+                    ModalBottomSheet(
+                        onDismissRequest = onAddClientDismissed,
+                        scrimColor = Color.Gray.copy(alpha = .3f)
+                    ) {
+                        GalaText(texto = "Mostrando agregar clientes")
+                    }
 
+            }
+        }
         ) {
 
         //Ahora es necesario evaluar lo que es el estado, el tipo de estado que compose está recibiendo verdaderamente y hacer ciertas pantallas según el estado
@@ -74,22 +90,11 @@ fun OwnerClientsScreen(
                         onClientCardClicked = { onClientCardClicked(client.id) }
                     )
                 }
-                if (uiState.showAddClient) {
-
-                    item {
-                        ModalBottomSheet(
-                            onDismissRequest = onFabClicked,
-                            scrimColor = Color.Gray.copy(alpha = .3f)
-                        ) {
-                            GalaText(texto = "Mostrando agregar clientes")
-                        }
-                    }
-                }
-
-
             }
         }
     }
+
+
 }
 
 //
@@ -160,6 +165,7 @@ fun ShowAddClientState() {
         ),
         onQueryChange = {},
         onFabClicked = {},
-        onClientCardClicked = {}
+        onClientCardClicked = {},
+        onAddClientDismissed = {}
     )
 }

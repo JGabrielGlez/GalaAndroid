@@ -42,7 +42,7 @@ fun AppHost(){
     //Contenedor que renderiza la pantalla actual según la ruta activa
     NavHost(
         navController=navController,
-        startDestination = AppDestinations.OWNER_AGENDA
+        startDestination = AppDestinations.OWNER_CLIENTS
     ) {
         //se debe declarar una entrada por ruta
         //Si la ruta actual es esta... Dibujas la pantalla del bloque
