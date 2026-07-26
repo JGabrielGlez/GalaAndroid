@@ -7,9 +7,11 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.drgabo.galaandroid.feature.appointments.presentation.agenda.showAgenda.OwnerAgenda
-import com.drgabo.galaandroid.feature.clients.presentation.showClients.OwnerClients
+import com.drgabo.galaandroid.feature.clients.presentation.showClients.OwnerClientsScreen
 import com.drgabo.galaandroid.core.ui.components.GalaText
 import com.drgabo.galaandroid.core.ui.components.ScaffoldPrincipal
+import com.drgabo.galaandroid.feature.clients.presentation.showClients.OwnerClientsRoot
+
 //sirve para decidir qué pantalla mostrar, cuál es la pantalla inicial y qué rutas existen dentro de la app
 
 //la navegación también forma parte del árbol de UI, por eso también entra dentro de Composable
@@ -44,7 +46,7 @@ fun AppHost(){
         //Si la ruta actual es esta... Dibujas la pantalla del bloque
         //Clientes
         composable(route = AppDestinations.OWNER_CLIENTS){
-            OwnerClients(
+            OwnerClientsRoot(
                 //  OwnerClients necesita recibir esos datos para pasarlos a ScaffoldPrincipal, y
                 //  luego ScaffoldPrincipal se los pasa a NavBar.
 

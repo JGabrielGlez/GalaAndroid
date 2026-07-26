@@ -6,7 +6,7 @@ import com.drgabo.galaandroid.feature.clients.domain.repositories.OwnerClientsRe
 class GetOwnerClientById (
     private val repository: OwnerClientsRepository
 ){
-    suspend fun invoke(id:String): Result<OwnerClientListItem>{
+    suspend fun invoke(id:String): Result<OwnerClientListItem?>{
         return  repository.getClientById(id)
     }
 }

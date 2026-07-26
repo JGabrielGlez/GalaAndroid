@@ -3,12 +3,11 @@ package com.drgabo.galaandroid.feature.clients.presentation.showClients
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
-import com.drgabo.galaandroid.feature.clients.data.local.FakeClientsRepository
 import com.drgabo.galaandroid.navigation.AppDestinations
 import com.drgabo.galaandroid.core.ui.components.ClientCardDetail
 import com.drgabo.galaandroid.core.ui.components.GalaText
 import com.drgabo.galaandroid.core.ui.components.ScaffoldPrincipal
-import com.drgabo.galaandroid.core.ui.theme.GalaAndroidTheme
+import com.drgabo.galaandroid.feature.clients.data.local.OwnerClientsList
 
 @Composable
 fun OwnerClientsScreen(
@@ -17,97 +16,123 @@ fun OwnerClientsScreen(
     uiState: OwnerClientsUiState,
     onQueryChange: (String) -> Unit
 ) {
+    //el sealed interface de success es el unico estado que contiene lo que es el query para realizar la búsqueda, por lo que es el que se tiene que obtener
+    val query = (uiState as? OwnerClientsUiState.Success)?.query.orEmpty()
+
     ScaffoldPrincipal(
         nombrePantalla = "Clientes",
         onFabClick = {},
         showFab = true,
         searchBarPlaceholder = "Buscar cliente",
         showSearchBar = true,
-        searchBarQuery = uiState.query,
+        searchBarQuery = query,
         onSearchBarOnQueryChange = onQueryChange,
         esPantallaClientes = true,
         currentRoute = currentRoute,
         onNavigate = onNavigate,
     ) {
-        if (uiState.isLoading) {
-            item {
-                GalaText(texto = "Cargando clientes")
+
+        //Ahora es necesario evaluar lo que es el estado, el tipo de estado que compose está recibiendo verdaderamente y hacer ciertas pantallas según el estado
+        when (val state = uiState) {
+            //Se declara lo que es el estado porque en uno de ellos, es necesario almacenar y obtener ciertos valores, como lo es en el estado de cuando hay error
+            is OwnerClientsUiState.Loading -> {
+                item {
+                    GalaText(texto = "Cargando los clientes...")
+                }
             }
-        } else if (uiState.mostrarEstadoVacio) {
-            item { GalaText(texto = "No hay clientes registrados") }
-        } else if (uiState.mostrarSinResultados) {
-            item { GalaText(texto = "No se encontraron coincidencias") }
-        } else {
-            items(uiState.clientesFiltrados) { client ->
-                ClientCardDetail(
-                    nombre = client.nombre,
-                    ultimaVisita = client.ultimaVisitaAt,
-                    noCitas = client.appointmentCount ?: 0
-                )
+
+            is OwnerClientsUiState.Empty -> {
+                item {
+                    GalaText(texto = "No hay clientes que mostrar aún")
+                }
+            }
+
+
+            is OwnerClientsUiState.Error -> {
+                item {
+                    GalaText(texto = state.message)
+                }
+            }
+
+            is OwnerClientsUiState.Success -> {
+                items(
+                    uiState.filteredClients
+                ) { client ->
+                    ClientCardDetail(
+                        nombre = client.nombre,
+                        ultimaVisita = client.ultimaVisitaAt,
+                        noCitas = client.appointmentsCount
+                    )
+                }
             }
         }
+//        if (uiState.isLoading) {
+//            item {
+//                GalaText(texto = "Cargando clientes")
+//            }
+//        } else if (uiState.mostrarEstadoVacio) {
+//            item { GalaText(texto = "No hay clientes registrados") }
+//        } else if (uiState.mostrarSinResultados) {
+//            item { GalaText(texto = "No se encontraron coincidencias") }
+//        } else {
+//            items(uiState.clientesFiltrados) { client ->
+//                ClientCardDetail(
+//                    nombre = client.nombre,
+//                    ultimaVisita = client.ultimaVisitaAt,
+//                    noCitas = client.appointmentCount ?: 0
+//                )
+//            }
+//        }
     }
 }
 
-@Preview(showBackground = true, widthDp = 390)
+
+@Preview
 @Composable
-fun ListaCompleta() {
-    GalaAndroidTheme {
-        OwnerClientsScreen(
-            currentRoute = AppDestinations.OWNER_CLIENTS,
-            onNavigate = {},
-            uiState = OwnerClientsUiState(
-                clientes = FakeClientsRepository().getClients()
-            ),
-            onQueryChange = {},
-        )
-    }
+fun ShowErrorState(){
+    OwnerClientsScreen(
+        currentRoute = AppDestinations.OWNER_CLIENTS,
+        onNavigate = {},
+        uiState = OwnerClientsUiState.Error(message = "Hubo un error inesperado"),
+        onQueryChange = {}
+    )
 }
 
-@Preview(showBackground = true, widthDp = 390)
+
+@Preview
 @Composable
-fun ListaVacia() {
-    GalaAndroidTheme {
-        OwnerClientsScreen(
-            currentRoute = AppDestinations.OWNER_CLIENTS,
-            onNavigate = {},
-            uiState = OwnerClientsUiState(
-                clientes = emptyList(),
-                isLoading = false
-            ),
-            onQueryChange = {},
-        )
-    }
+fun ShowLoadingState(){
+    OwnerClientsScreen(
+        currentRoute = AppDestinations.OWNER_CLIENTS,
+        onNavigate = {},
+        uiState = OwnerClientsUiState.Loading,
+        onQueryChange = {}
+    )
 }
 
-@Preview(showBackground = true, widthDp = 390)
+
+@Preview
 @Composable
-fun CargandoLista() {
-    GalaAndroidTheme {
-        OwnerClientsScreen(
-            currentRoute = AppDestinations.OWNER_CLIENTS,
-            onNavigate = {},
-            uiState = OwnerClientsUiState(
-                isLoading = true
-            ),
-            onQueryChange = {},
-        )
-    }
+fun ShowEmptyState(){
+    OwnerClientsScreen(
+        currentRoute = AppDestinations.OWNER_CLIENTS,
+        onNavigate = {},
+        uiState = OwnerClientsUiState.Empty,
+        onQueryChange = {}
+    )
 }
 
-@Preview(showBackground = true, widthDp = 390)
+
+@Preview
 @Composable
-fun NoResultados() {
-    GalaAndroidTheme {
-        OwnerClientsScreen(
-            currentRoute = AppDestinations.OWNER_CLIENTS,
-            onNavigate = {},
-            uiState = OwnerClientsUiState(
-                query = "hola",
-                // El filtrado vive en el UiState, no en el repository.
-                clientes = FakeClientsRepository().getClients()
-            ),
-            onQueryChange = {},
-        )
-    }
+fun ShowSuccessState(){
+    OwnerClientsScreen(
+        currentRoute = AppDestinations.OWNER_CLIENTS,
+        onNavigate = {},
+        uiState = OwnerClientsUiState.Success(
+            clients = OwnerClientsList,
+
+        ),
+        onQueryChange = {}
+    )
 }

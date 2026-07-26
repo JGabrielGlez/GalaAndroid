@@ -1,7 +1,7 @@
 package com.drgabo.galaandroid.feature.clients.data.remote.mappers
 
 import com.drgabo.galaandroid.feature.appointments.data.remote.mappers.toDomain
-import com.drgabo.galaandroid.feature.clients.data.remote.dto.OwnerClientListItemDto
+import com.drgabo.galaandroid.data.dto.OwnerClientListItemDto
 import com.drgabo.galaandroid.feature.clients.domain.models.OwnerClientListItem
 
 

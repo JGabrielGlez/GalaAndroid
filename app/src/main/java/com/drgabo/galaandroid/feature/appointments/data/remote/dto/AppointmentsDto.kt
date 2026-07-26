@@ -1,5 +1,6 @@
 package com.drgabo.galaandroid.feature.appointments.data.remote.dto
 
+import com.drgabo.galaandroid.data.dto.OwnerClientListItemDto
 import com.drgabo.galaandroid.data.enums.CommercialStatusDto
 import com.drgabo.galaandroid.data.enums.AppointmentStatusDto
 import com.drgabo.galaandroid.data.enums.PaymentStatusDto
@@ -18,7 +19,7 @@ data class OwnerAppointmentListItemDto(
     val source: AppointmentSourceDto,
     val ghostFlag: Boolean,
     val client: PublicClientInfoDto? = null,
-    val clientProfile: ClientDto? = null,
+    val clientProfile: OwnerClientListItemDto? = null,
     val serviceSummary: List<ServiceDto>? = emptyList(),
     val paymentUrl: String? = null,
     val businessTimezone: String,

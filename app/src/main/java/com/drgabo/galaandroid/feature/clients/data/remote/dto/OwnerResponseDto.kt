@@ -1,8 +1,8 @@
 package com.drgabo.galaandroid.feature.clients.data.remote.dto
 
 import com.drgabo.galaandroid.data.dto.OwnerBusinessSummaryDto
+import com.drgabo.galaandroid.data.dto.OwnerClientListItemDto
 import com.drgabo.galaandroid.data.dto.OwnerDashboardRealtimeDto
-import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -11,7 +11,7 @@ data class OwnerResponseDto(
     val segment: SegmentDto,
     val query: String,
     val clients: List<OwnerClientListItemDto>,
-    val selectedClient:OwnerClientListItemDto? = null,
+    val selectedClient: OwnerClientListItemDto? = null,
     val realtime: OwnerDashboardRealtimeDto
 )
 

@@ -25,7 +25,7 @@ class FakeOwnerClientsListData: OwnerClientsRepository{
 }
 
 
-private val OwnerClientsList = listOf(
+ val OwnerClientsList = listOf(
     OwnerClientListItem(
         id = "client-001",
         nombre = "Valentina Herrera",

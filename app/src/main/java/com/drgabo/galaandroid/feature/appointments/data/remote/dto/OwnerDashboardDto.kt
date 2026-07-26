@@ -1,6 +1,7 @@
 package com.drgabo.galaandroid.feature.appointments.data.remote.dto
 
 import com.drgabo.galaandroid.data.dto.OwnerBusinessSummaryDto
+import com.drgabo.galaandroid.data.dto.OwnerClientListItemDto
 import com.drgabo.galaandroid.data.dto.OwnerDashboardRealtimeDto
 import kotlinx.serialization.Serializable
 
@@ -11,7 +12,7 @@ data class OwnerDashboardDto(
     val agendaLabel: String,
     val todayStats: OwnerDashboardTodayStatsDto,
     val appointmentsPreview: List<OwnerAppointmentListItemDto>,
-    val clientsPreview: List<ClientDto>,
+    val clientsPreview: List<OwnerClientListItemDto>,
     val realtime: OwnerDashboardRealtimeDto,
 )
 
