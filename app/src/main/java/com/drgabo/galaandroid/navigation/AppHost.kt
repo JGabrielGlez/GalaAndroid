@@ -10,6 +10,7 @@ import com.drgabo.galaandroid.feature.appointments.presentation.agenda.showAgend
 import com.drgabo.galaandroid.feature.clients.presentation.showClients.OwnerClientsScreen
 import com.drgabo.galaandroid.core.ui.components.GalaText
 import com.drgabo.galaandroid.core.ui.components.ScaffoldPrincipal
+import com.drgabo.galaandroid.feature.clients.presentation.showClientDetails.ShowClientDetailsRoot
 import com.drgabo.galaandroid.feature.clients.presentation.showClients.OwnerClientsRoot
 
 //sirve para decidir qué pantalla mostrar, cuál es la pantalla inicial y qué rutas existen dentro de la app
@@ -22,6 +23,7 @@ fun AppHost(){
     val navController = rememberNavController()//es remember porque es necesario conservar el mismo controlador
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
+    val selectedTabRoute= AppDestinations.selectedTabRoute(currentRoute)
 
     val onNavigate:(String)->Unit={route->
         if(route!=currentRoute){
@@ -50,7 +52,7 @@ fun AppHost(){
                 //  OwnerClients necesita recibir esos datos para pasarlos a ScaffoldPrincipal, y
                 //  luego ScaffoldPrincipal se los pasa a NavBar.
 
-                currentRoute = currentRoute,
+                currentRoute = selectedTabRoute,
                 onNavigate = onNavigate
             )
         }
@@ -58,7 +60,7 @@ fun AppHost(){
         //Dashboard
         composable (route= AppDestinations.OWNER_AGENDA){
             OwnerAgenda(
-                currentRoute = currentRoute,
+                currentRoute = selectedTabRoute,
                 onNavigate = onNavigate
             )
         }
@@ -69,7 +71,7 @@ fun AppHost(){
         composable(route = AppDestinations.OWNER_SERVICES) {
             PlaceholderMainScreen(
                 title = "Servicios",
-                currentRoute = currentRoute,
+                currentRoute = selectedTabRoute,
                 onNavigate = onNavigate
             )
         }
@@ -77,8 +79,20 @@ fun AppHost(){
         composable(route = AppDestinations.OWNER_MORE) {
             PlaceholderMainScreen(
                 title = "Mas",
-                currentRoute = currentRoute,
+                currentRoute = selectedTabRoute,
                 onNavigate = onNavigate
+            )
+        }
+
+        composable (route= AppDestinations.OWNER_CLIENT_DETAILS){
+            entry->
+            val clientId = entry.arguments
+                ?.getString("clientId")
+                .orEmpty()
+            ShowClientDetailsRoot(
+                currentRoute=selectedTabRoute,
+                clientId=clientId,
+                onNavigate=onNavigate
             )
         }
     }

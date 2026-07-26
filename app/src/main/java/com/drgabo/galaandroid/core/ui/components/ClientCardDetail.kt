@@ -33,68 +33,76 @@ fun ClientCardDetail(
     nombre: String,
     ultimaVisita: String,
     noCitas: Int,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onClientCardClicked: ()-> Unit
 ) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .height(64.dp)
-            .background(Color.Transparent),
+            .background(Color.Transparent)
+            .clickable(
+                enabled = true,
+                onClick = onClientCardClicked
+            ),
         colors = CardDefaults.cardColors(contentColor = Color.Transparent)
-    ) {Column() {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .clickable(
-                    enabled = true,
-                    onClick = { println(message = "Cliente presionado") }
-                )
-                .padding(vertical = 8.dp, horizontal = 12.dp),
-
-            horizontalArrangement = Arrangement.spacedBy(12.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-
-            //Círculo con la inicial
-            Box(
+    ) {
+        Column() {
+            Row(
                 modifier = Modifier
-                    .size(40.dp)
-                    .clip(shape = CircleShape)
-                    .background(color = AcentoSuave.copy(alpha = .7f))
-                    .padding(4.dp),
+                    .fillMaxWidth()
+                    .padding(vertical = 8.dp, horizontal = 12.dp),
 
-                contentAlignment = Alignment.Center
+                horizontalArrangement = Arrangement.spacedBy(12.dp),
+                verticalAlignment = Alignment.CenterVertically
             ) {
-                GalaText(nombre.first().toString().uppercase(),
-                    peso= FontWeight.SemiBold,
-                    estilo = Typography.bodyLarge)
+
+                //Círculo con la inicial
+                Box(
+                    modifier = Modifier
+                        .size(40.dp)
+                        .clip(shape = CircleShape)
+                        .background(color = AcentoSuave.copy(alpha = .7f))
+                        .padding(4.dp),
+
+                    contentAlignment = Alignment.Center
+                ) {
+                    GalaText(
+                        nombre.first().toString().uppercase(),
+                        peso = FontWeight.SemiBold,
+                        estilo = Typography.bodyLarge
+                    )
+                }
+
+                //columna con los datos
+                Column(
+                    modifier = Modifier.weight(1f),
+
+                    horizontalAlignment = Alignment.Start,
+                    verticalArrangement = Arrangement.spacedBy(4.dp)
+                ) {
+                    GalaText(
+                        texto = nombre,
+                        peso = FontWeight.SemiBold
+                    )
+                    GalaText(
+                        //TODO quitar la s de Citas cuando solo lleva 1 cita
+                        texto = "$noCitas citas - Última visita: $ultimaVisita",
+                        colorTexto = TextoSecundario,
+                        estilo = Typography.bodySmall
+                    )
+                }
+
+                //divisor
+
             }
-
-            //columna con los datos
-            Column(
-                modifier = Modifier.weight(1f),
-
-                horizontalAlignment = Alignment.Start,
-                verticalArrangement = Arrangement.spacedBy(4.dp)
-            ) {
-                GalaText(
-                    texto = nombre,
-                    peso = FontWeight.SemiBold
-                )
-                GalaText(
-                    //TODO quitar la s de Citas cuando solo lleva 1 cita
-                    texto = "$noCitas citas - Última visita: $ultimaVisita",
-                    colorTexto = TextoSecundario,
-                    estilo = Typography.bodySmall
-                )
-            }
-
-            //divisor
+            HorizontalDivider(
+                thickness = 1.dp,
+                color = AcentoSuave,
+                modifier = Modifier.fillMaxWidth()
+            )
 
         }
-        HorizontalDivider(thickness = 1.dp, color = AcentoSuave, modifier = Modifier.fillMaxWidth())
-
-    }
     }
 }
 
@@ -102,6 +110,10 @@ fun ClientCardDetail(
 @Composable
 fun MostrarCard() {
     GalaAndroidTheme {
-        ClientCardDetail(nombre = "gabriel", ultimaVisita = "12 de junio", noCitas = 2)
+        ClientCardDetail(
+            nombre = "gabriel", ultimaVisita = "12 de junio", noCitas = 2,
+            modifier = TODO(),
+            onClientCardClicked = {},
+        )
     }
 }

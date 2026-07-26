@@ -3,11 +3,13 @@ package com.drgabo.galaandroid.feature.clients.presentation.showClients
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.core.text.isDigitsOnly
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.drgabo.galaandroid.feature.appointments.data.local.FakeAppointmenRepository
 import com.drgabo.galaandroid.feature.clients.data.local.FakeOwnerClientsListData
 import com.drgabo.galaandroid.feature.clients.domain.usecases.GetOwnerClientsUseCase
+import com.drgabo.galaandroid.navigation.AppDestinations
 
 
 @Composable
@@ -42,7 +44,13 @@ fun OwnerClientsRoot(
         uiState=uiState,
         //Este es el callback hacia el VM
         onQueryChange = viewModel::onQueryChange,
-        onFabClicked = viewModel::onAddClient
+        onFabClicked = viewModel::onAddClient,
+        onClientCardClicked = {
+            clientId->
+            onNavigate(
+                AppDestinations.clientDetail(clientId)
+            )
+        }
     )
 
 

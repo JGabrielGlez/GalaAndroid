@@ -1,6 +1,7 @@
 package com.drgabo.galaandroid.feature.clients.presentation.showClientDetails
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -10,9 +11,10 @@ import com.drgabo.galaandroid.feature.clients.domain.usecases.GetOwnerClientById
 
 
 @Composable
-fun ShowClientDetails(
+fun ShowClientDetailsRoot(
     currentRoute: String?,
-    onNavigate: (String)-> Unit
+    onNavigate: (String)-> Unit,
+    clientId:String
 ){
     //A partir de aquí se construyen todas las dependencias que permitan conectar TODOS los archivos creados
     //Se ocupan construir el view model y el uiState
@@ -37,6 +39,11 @@ fun ShowClientDetails(
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
     // a partir de este momento ya se le pueden enviar cosas a la Screen
+
+    //Esto lo que hace es que cuando se compone, lo que hace es cargar el cliente, para posteriormente mandar a llamar a la screen
+    LaunchedEffect(clientId) {
+        viewModel.loadClient(clientId)
+    }
 
     ShowClientDetailsScreen(
         currentRoute=currentRoute,

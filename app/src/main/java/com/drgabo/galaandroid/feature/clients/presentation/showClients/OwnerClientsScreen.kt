@@ -19,7 +19,8 @@ fun OwnerClientsScreen(
     onNavigate: (String) -> Unit,
     uiState: OwnerClientsUiState,
     onQueryChange: (String) -> Unit,
-    onFabClicked: ()->Unit
+    onFabClicked: () -> Unit,
+    onClientCardClicked: (String) -> Unit
     //tiene que recibir la función que activa o desactiva el drawer
 ) {
     //el sealed interface de success es el unico estado que contiene lo que es el query para realizar la búsqueda, por lo que es el que se tiene que obtener
@@ -37,7 +38,8 @@ fun OwnerClientsScreen(
         esPantallaClientes = true,
         currentRoute = currentRoute,
         onNavigate = onNavigate,
-    ) {
+
+        ) {
 
         //Ahora es necesario evaluar lo que es el estado, el tipo de estado que compose está recibiendo verdaderamente y hacer ciertas pantallas según el estado
         when (uiState) {
@@ -69,17 +71,17 @@ fun OwnerClientsScreen(
                         nombre = client.nombre,
                         ultimaVisita = client.ultimaVisitaAt,
                         noCitas = client.appointmentsCount,
-                        //agregarle un método en el cual detecte el click
+                        onClientCardClicked = { onClientCardClicked(client.id) }
                     )
                 }
-                if(uiState.showAddClient){
+                if (uiState.showAddClient) {
 
-                    item{
+                    item {
                         ModalBottomSheet(
                             onDismissRequest = onFabClicked,
                             scrimColor = Color.Gray.copy(alpha = .3f)
                         ) {
-                            GalaText(texto="Mostrando agregar clientes")
+                            GalaText(texto = "Mostrando agregar clientes")
                         }
                     }
                 }
@@ -87,23 +89,6 @@ fun OwnerClientsScreen(
 
             }
         }
-//        if (uiState.isLoading) {
-//            item {
-//                GalaText(texto = "Cargando clientes")
-//            }
-//        } else if (uiState.mostrarEstadoVacio) {
-//            item { GalaText(texto = "No hay clientes registrados") }
-//        } else if (uiState.mostrarSinResultados) {
-//            item { GalaText(texto = "No se encontraron coincidencias") }
-//        } else {
-//            items(uiState.clientesFiltrados) { client ->
-//                ClientCardDetail(
-//                    nombre = client.nombre,
-//                    ultimaVisita = client.ultimaVisitaAt,
-//                    noCitas = client.appointmentCount ?: 0
-//                )
-//            }
-//        }
     }
 }
 
@@ -165,15 +150,16 @@ fun OwnerClientsScreen(
 
 @Preview
 @Composable
-fun ShowAddClientState(){
+fun ShowAddClientState() {
     OwnerClientsScreen(
         currentRoute = AppDestinations.OWNER_CLIENTS,
         onNavigate = {},
         uiState = OwnerClientsUiState.Success(
             clients = OwnerClientsList,
             showAddClient = true
-            ),
+        ),
         onQueryChange = {},
-        onFabClicked = {}
+        onFabClicked = {},
+        onClientCardClicked = {}
     )
 }
