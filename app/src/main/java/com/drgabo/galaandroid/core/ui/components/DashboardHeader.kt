@@ -1,5 +1,6 @@
 package com.drgabo.galaandroid.core.ui.components
 
+import com.drgabo.galaandroid.R
 
 import com.drgabo.galaandroid.core.ui.icons.notifications
 import androidx.compose.foundation.layout.Arrangement
@@ -22,6 +23,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.drgabo.galaandroid.core.ui.icons.arrow_back
 import com.drgabo.galaandroid.core.ui.theme.GalaAndroidTheme
 import com.drgabo.galaandroid.core.ui.theme.NeutroBorde
 
@@ -29,18 +31,39 @@ import com.drgabo.galaandroid.core.ui.theme.NeutroBorde
 fun DashboardHeader(
     userName: String,
     modifier: Modifier = Modifier,
-    onNotificationClick: () -> Unit = {}
+    onNotificationClick: () -> Unit = {},
+    hasNotification: Boolean = true,
+    onBack: () -> Unit = {},
+    hasBack: Boolean = false,
 ) {
     Column() {
 
         Row(
             modifier = modifier
                 .fillMaxWidth()
-                .height(60.dp)
-            ,
+                .height(60.dp),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
+            if (hasBack) {
+                OutlinedCard(
+                    shape = CircleShape,
+
+                    colors = CardDefaults.outlinedCardColors(
+                        containerColor = MaterialTheme.colorScheme.surface
+                    )
+                ) {
+                    GalaIconButton(
+                        onClick = onBack,
+                        icon =
+                            GalaIcon.VectorIcon(
+                                imgVector = arrow_back,
+                                contentDes = "Atrás",
+                            )
+
+                    )
+                }
+            }
             Text(
                 modifier = Modifier.weight(1f),
                 text = "Hola, $userName",
@@ -49,23 +72,24 @@ fun DashboardHeader(
                 textAlign = TextAlign.Center
             )
 
-            OutlinedCard(
-                shape = CircleShape,
+            if (hasNotification) {
+                OutlinedCard(
+                    shape = CircleShape,
 
-                colors = CardDefaults.outlinedCardColors(
-                    containerColor = MaterialTheme.colorScheme.surface
-                )
-            ) {
-                GalaIconButton(
-                    onClick = onNotificationClick,
-                    icon =
-                        GalaIcon.VectorIcon(
-                            imgVector = notifications,
-                            contentDes = "Notificaciones"
-                        )
-                    ,modifier.size(36.dp)
+                    colors = CardDefaults.outlinedCardColors(
+                        containerColor = MaterialTheme.colorScheme.surface
+                    )
+                ) {
+                    GalaIconButton(
+                        onClick = onNotificationClick,
+                        icon =
+                            GalaIcon.VectorIcon(
+                                imgVector = notifications,
+                                contentDes = "Notificaciones"
+                            ), modifier.size(36.dp)
 
-                )
+                    )
+                }
             }
         }
         HorizontalDivider(thickness = 2.dp, color = NeutroBorde)
@@ -76,6 +100,6 @@ fun DashboardHeader(
 @Composable
 fun MostrarHeader() {
     GalaAndroidTheme {
-        DashboardHeader(userName = "María")
+        DashboardHeader(userName = "María", hasBack = true)
     }
 }
