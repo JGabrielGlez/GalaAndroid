@@ -10,6 +10,7 @@ import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
@@ -23,6 +24,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.drgabo.galaandroid.navigation.AppDestinations
 import com.drgabo.galaandroid.core.ui.theme.GalaAndroidTheme
+import com.drgabo.galaandroid.core.ui.theme.NeutroBorde
 import com.drgabo.galaandroid.core.ui.theme.TextoSecundario
 import com.drgabo.galaandroid.core.ui.theme.Typography
 import com.drgabo.galaandroid.core.util.SnackBarManager
@@ -70,7 +72,7 @@ fun ScaffoldPrincipal(
             topBar = {
                 Column(
                     modifier = Modifier.padding(horizontal = 12.dp),
-                    verticalArrangement = Arrangement.spacedBy(4.dp)
+                    verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
                     DashboardHeader(userName = nombrePantalla)
 
@@ -89,8 +91,19 @@ fun ScaffoldPrincipal(
                             shape = RoundedCornerShape(30),
                             modifier = Modifier
                                 .fillMaxWidth(),
-                            singleLine = true
+                            singleLine = true,
+                            colors =   OutlinedTextFieldDefaults
+                                .colors(
+                                    focusedBorderColor = NeutroBorde,
+                                    unfocusedBorderColor = NeutroBorde,
 
+                                    focusedTextColor = Color.Black,
+                                    unfocusedTextColor = Color.Black,
+
+                                    focusedPlaceholderColor = TextoSecundario,
+                                    unfocusedPlaceholderColor = TextoSecundario,
+
+                                )
                         )
                     }
                 }

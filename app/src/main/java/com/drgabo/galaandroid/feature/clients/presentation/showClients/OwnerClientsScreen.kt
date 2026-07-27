@@ -3,15 +3,18 @@ package com.drgabo.galaandroid.feature.clients.presentation.showClients
 import android.util.Log
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.drgabo.galaandroid.navigation.AppDestinations
 import com.drgabo.galaandroid.core.ui.components.ClientCardDetail
 import com.drgabo.galaandroid.core.ui.components.GalaText
 import com.drgabo.galaandroid.core.ui.components.ScaffoldPrincipal
+import com.drgabo.galaandroid.core.ui.theme.GalaAndroidTheme
 import com.drgabo.galaandroid.feature.clients.data.local.OwnerClientsList
 import com.drgabo.galaandroid.feature.clients.presentation.showClientDetails.ShowClientDetailsUiState
 
@@ -80,9 +83,14 @@ fun OwnerClientsScreen(
             }
 
             is OwnerClientsUiState.Success -> {
+                item{
+                    HorizontalDivider(thickness = 8.dp, color = Color.Transparent)
+                }
                 items(
                     uiState.filteredClients
-                ) { client ->
+                ) {
+
+                    client ->
                     ClientCardDetail(
                         nombre = client.nombre,
                         ultimaVisita = client.ultimaVisitaAt,
@@ -156,16 +164,19 @@ fun OwnerClientsScreen(
 @Preview
 @Composable
 fun ShowAddClientState() {
-    OwnerClientsScreen(
-        currentRoute = AppDestinations.OWNER_CLIENTS,
-        onNavigate = {},
-        uiState = OwnerClientsUiState.Success(
-            clients = OwnerClientsList,
-            showAddClient = true
-        ),
-        onQueryChange = {},
-        onFabClicked = {},
-        onClientCardClicked = {},
-        onAddClientDismissed = {}
-    )
+    GalaAndroidTheme {
+
+        OwnerClientsScreen(
+            currentRoute = AppDestinations.OWNER_CLIENTS,
+            onNavigate = {},
+            uiState = OwnerClientsUiState.Success(
+                clients = OwnerClientsList,
+                showAddClient = true
+            ),
+            onQueryChange = {},
+            onFabClicked = {},
+            onClientCardClicked = {},
+            onAddClientDismissed = {}
+        )
+    }
 }

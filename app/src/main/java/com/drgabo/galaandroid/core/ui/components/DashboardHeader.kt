@@ -3,12 +3,14 @@ package com.drgabo.galaandroid.core.ui.components
 
 import com.drgabo.galaandroid.core.ui.icons.notifications
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.MaterialTheme
@@ -21,6 +23,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.drgabo.galaandroid.core.ui.theme.GalaAndroidTheme
+import com.drgabo.galaandroid.core.ui.theme.NeutroBorde
 
 @Composable
 fun DashboardHeader(
@@ -28,40 +31,44 @@ fun DashboardHeader(
     modifier: Modifier = Modifier,
     onNotificationClick: () -> Unit = {}
 ) {
-    Row(
-        modifier = modifier
-            .fillMaxWidth()
-            .height(60.dp)
+    Column() {
+
+        Row(
+            modifier = modifier
+                .fillMaxWidth()
+                .height(60.dp)
             ,
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Text(
-            modifier = Modifier.weight(1f),
-            text = "Hola, $userName",
-            style = MaterialTheme.typography.titleMedium,
-            color = MaterialTheme.colorScheme.onBackground,
-            textAlign = TextAlign.Center
-        )
-
-        OutlinedCard(
-            shape = CircleShape,
-
-            colors = CardDefaults.outlinedCardColors(
-                containerColor = MaterialTheme.colorScheme.surface
-            )
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
         ) {
-            GalaIconButton(
-                onClick = onNotificationClick,
-                icon =
-                    GalaIcon.VectorIcon(
-                        imgVector = notifications,
-                        contentDes = "Notificaciones"
-                    )
-                ,modifier.size(36.dp)
-                
+            Text(
+                modifier = Modifier.weight(1f),
+                text = "Hola, $userName",
+                style = MaterialTheme.typography.titleMedium,
+                color = MaterialTheme.colorScheme.onBackground,
+                textAlign = TextAlign.Center
             )
+
+            OutlinedCard(
+                shape = CircleShape,
+
+                colors = CardDefaults.outlinedCardColors(
+                    containerColor = MaterialTheme.colorScheme.surface
+                )
+            ) {
+                GalaIconButton(
+                    onClick = onNotificationClick,
+                    icon =
+                        GalaIcon.VectorIcon(
+                            imgVector = notifications,
+                            contentDes = "Notificaciones"
+                        )
+                    ,modifier.size(36.dp)
+
+                )
+            }
         }
+        HorizontalDivider(thickness = 2.dp, color = NeutroBorde)
     }
 }
 
